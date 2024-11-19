@@ -4,19 +4,29 @@ int main()
 {
   /* code */
   const float IVA = 12;
-  float amount = 0;
+  float amount1 = 0;
+  float amount2 = 0;
 
-  cout << "Introduzca un monto valido para calcular su iva de: " << IVA << '%' << endl;
+  cout << "Introduzca montos validos para calcular su iva de: " << IVA << '%' << endl;
 
-  cin >> amount;
+  cout << "Primer Articulo" << endl;
 
-  if (amount <= 0)
+  cin >> amount1;
+
+  cout << "Segundo Articulo" << endl;
+
+  cin >> amount2;
+
+  if (amount1 <= 0 || amount2 <= 0)
   {
-    cout << "Debe introducir un monto valido" << endl;
+    cout << "Debe introducir montos validos" << endl;
     return 0;
   }
 
-  cout << "El iva calculado es: " << amount * (IVA / 100) << endl;
+  const float subTotal = amount1 + amount2;
+  const float amountIVA = subTotal * (IVA / 100);
+
+  cout << "El iva calculado es: " << amountIVA << " y el total a pagar es: " << subTotal + amountIVA << endl;
 
   return 0;
 }
