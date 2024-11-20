@@ -29,9 +29,11 @@ int main()
   // cout << "El valor de r es " << r << endl;
 
   // e)
-  b = b && i + j >= j * 5 % 3; //---> 1 o true
-  cout << (b && i + j) << " >= " << (j * 5 % 3) << endl;
-  cout << "El valor de b es " << b << endl;
+  // b = b && i + j >= j * 5 % 3; //---> 1 o true
+  // cout << (b && i + j) << " >= " << (j * 5 % 3) << endl;
+  // cout << "El valor de b es " << b << endl;
+
+  
 
   return 0;
 }
