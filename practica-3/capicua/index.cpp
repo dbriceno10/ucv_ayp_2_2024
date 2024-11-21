@@ -4,7 +4,7 @@ using namespace std;
 int main()
 {
   /* code */
-  int n = 0, n1 = 0, n2 = 0, n3 = 0, n4 = 0, n5 = 0;
+  int n = 0;
   cout << "Introduzca un numero de 5 digitos" << endl;
   cin >> n;
   if (to_string(n).length() != 5)
