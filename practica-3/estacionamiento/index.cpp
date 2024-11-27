@@ -17,24 +17,34 @@ int main()
   const int tEntrada = hE * 60 + mE;
   const int tSalida = hS * 60 + mS;
 
-  if(tSalida > tEntrada) {
-    cout << "Datos erroneos";
+  if (tSalida < tEntrada)
+  {
+    cout << "Datos erroneos" << endl;
     return 0;
   }
 
-  const int tTotal = tEntrada + tSalida -60;
+  int tTotal = tSalida - tEntrada;
 
-  if (tTotal - 60 > 0 && tTotal - 60 < 60) {
-    cout << "El total a pagar es de 100 bs" << endl;
-  } else if (tTotal > 60) {
+  int totalAPagar = 0;
 
-  }
+  if (tTotal > 0)
   {
-    /* code */
+    totalAPagar = 100;
   }
-  
 
+  if (tTotal > 60)
+  {
+    tTotal = tTotal - 60;
+    int horasExtra = tTotal / 60;
+    float pico = (float)tTotal / 60 - horasExtra;
+    totalAPagar = totalAPagar + horasExtra * 80;
+    if (pico > 0)
+    {
+      totalAPagar = totalAPagar + 80;
+    }
+  }
 
+  cout << "El total a pagar es de " << totalAPagar << "Bs" << endl;
 
   return 0;
 }
