@@ -12,6 +12,7 @@ int main(int argc, char const *argv[])
   cin >> P;
   cout << "Cuantos saltos dio Jose; " << endl;
   cin >> K;
+  // cin >> J >> P >> K;
   const int periodo = K * P;
   const int maxJ = J * K;
   const int encuentros = maxJ / periodo;
