@@ -4,7 +4,6 @@ using namespace std;
 int main()
 {
   /* code */
-  //! NOTA: Estamos usando la libreria cmath debido a que si trabajaramos con el operador ^ en c++ estariamos limitados a que la base tiene que ser un entero
   float a = 0, b = 0, c = 0, x1 = 0, x2 = 0;
   cout << "Introduzca el coeficiente para a aX^2" << endl;
   cin >> a;
