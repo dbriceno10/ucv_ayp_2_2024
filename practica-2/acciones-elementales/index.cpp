@@ -4,11 +4,11 @@ using namespace std;
 int main()
 {
   /* code */
-  int i = 1, j = 2;
-  float r = 2.0;
-  bool b = true;
-  // int a = 3, b = 4;
-  // bool c = true;
+  // int i = 1, j = 2;
+  // float r = 2.0;
+  // bool b = true;
+  int a = 3, b = 4;
+  bool c = true;
 
   // #1
   // a)
@@ -33,7 +33,8 @@ int main()
   // cout << (b && i + j) << " >= " << (j * 5 % 3) << endl;
   // cout << "El valor de b es " << b << endl;
 
-  
+  float r = pow(b/2-4*a*b,1/2);
+cout <<pow(-4, 0.5)<< endl;
 
   return 0;
 }
