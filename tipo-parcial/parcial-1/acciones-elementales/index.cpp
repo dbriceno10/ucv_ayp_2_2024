@@ -15,6 +15,16 @@ int main(int argc, char const *argv[])
   float i2 = (int(s) * p + 100) + q - (r % p - q);
   bool i3 = (s - p / q) * r <= q && (int)(r * s) / p > q;
   float i4 = p - 2 * p / q + (s + 5);
-  cout << i4 << endl;
+  // cout << i4 << endl;
+
+  int fecha1 = 1010666;
+  int dia = 0, mes = 0, ano = 0, copia1 = fecha1;
+  dia = copia1 / 100000;
+  copia1 = copia1 % 100000;
+  mes = copia1 / 1000;
+  copia1 = copia1 % 1000;
+  ano = copia1;
+
+  cout << dia << '/' << mes << '/' << ano << endl;
   return 0;
 }
