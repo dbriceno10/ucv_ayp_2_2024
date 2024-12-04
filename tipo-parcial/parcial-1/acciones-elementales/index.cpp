@@ -17,14 +17,14 @@ int main(int argc, char const *argv[])
   float i4 = p - 2 * p / q + (s + 5);
   // cout << i4 << endl;
 
-  int fecha1 = 1010666;
-  int dia = 0, mes = 0, ano = 0, copia1 = fecha1;
-  dia = copia1 / 100000;
-  copia1 = copia1 % 100000;
-  mes = copia1 / 1000;
-  copia1 = copia1 % 1000;
-  ano = copia1;
+  // int fecha1 = 1010666;
+  // int dia = 0, mes = 0, ano = 0, copia1 = fecha1;
+  // dia = copia1 / 100000;
+  // copia1 = copia1 % 100000;
+  // mes = copia1 / 1000;
+  // copia1 = copia1 % 1000;
+  // ano = copia1;
 
-  cout << dia << '/' << mes << '/' << ano << endl;
+  // cout << dia << '/' << mes << '/' << ano << endl;
   return 0;
 }
