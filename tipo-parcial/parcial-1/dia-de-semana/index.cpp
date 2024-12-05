@@ -1,81 +1,140 @@
 #include <iostream>
+#include <cmath>
 using namespace std;
 
-int getMonthDays(int day, int month)
+// int getMonthDays(int day, int month)
+// {
+//   int aux = 0;
+//   switch (month)
+//   {
+//   case 1:
+//   {
+//     aux = day;
+//     break;
+//   }
+//   case 2:
+//   {
+//     aux = day + 31;
+//     break;
+//   }
+//   case 3:
+//   {
+//     aux = day + 31 + 28;
+//     break;
+//   }
+//   case 4:
+//   {
+//     aux = day + 31 + 28 + 31;
+//     break;
+//   }
+//   case 5:
+//   {
+//     aux = day + 31 + 28 + 31 + 30;
+//     break;
+//   }
+//   case 6:
+//   {
+//     aux = day + 31 + 28 + 31 + 30 + 31;
+//     break;
+//   }
+//   case 7:
+//   {
+//     aux = day + 31 + 28 + 31 + 30 + 31 + 30;
+//     break;
+//   }
+//   case 8:
+//   {
+//     aux = day + 31 + 28 + 31 + 30 + 31 + 30 + 31;
+//     break;
+//   }
+//   case 9:
+//   {
+//     aux = day + 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31;
+//     break;
+//   }
+//   case 10:
+//   {
+//     aux = day + 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30;
+//     break;
+//   }
+//   case 11:
+//   {
+//     aux = day + 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31;
+//     break;
+//   }
+//   case 12:
+//   {
+//     aux = day + 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30;
+//     break;
+//   }
+//   default:
+//     aux = 1;
+//     break;
+//   }
+//   return aux;
+// }
+
+int getMonthDays(int month)
 {
-  int aux = 0;
+  int days = 0;
   switch (month)
   {
-  case 1:
+  case 12:
   {
-    aux = day;
-    break;
-  }
-  case 2:
-  {
-    aux = day + 31;
-    break;
-  }
-  case 3:
-  {
-    aux = day + 31 + 28;
-    break;
-  }
-  case 4:
-  {
-    aux = day + 31 + 28 + 31;
-    break;
-  }
-  case 5:
-  {
-    aux = day + 31 + 28 + 31 + 30;
-    break;
-  }
-  case 6:
-  {
-    aux = day + 31 + 28 + 31 + 30 + 31;
-    break;
-  }
-  case 7:
-  {
-    aux = day + 31 + 28 + 31 + 30 + 31 + 30;
-    break;
-  }
-  case 8:
-  {
-    aux = day + 31 + 28 + 31 + 30 + 31 + 30 + 31;
-    break;
-  }
-  case 9:
-  {
-    aux = day + 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31;
-    break;
-  }
-  case 10:
-  {
-    aux = day + 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30;
-    break;
+    days += 30;
   }
   case 11:
   {
-    aux = day + 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31;
-    break;
+    days += 31;
   }
-  case 12:
+  case 10:
   {
-    aux = day + 31 + 28 + 31 + 30 + 31 + 30 + 31 + 31 + 30 + 31 + 30;
-    break;
+    days += 30;
+  }
+  case 9:
+  {
+    days += 31;
+  }
+  case 8:
+  {
+    days += 31;
+  }
+  case 7:
+  {
+    days += 30;
+  }
+  case 6:
+  {
+    days += 31;
+  }
+  case 5:
+  {
+    days += 30;
+  }
+  case 4:
+  {
+    days += 31;
+  }
+  case 3:
+  {
+    days += 28;
+  }
+  case 2:
+  {
+    days += 31;
   }
   default:
-    aux = 1;
+  {
+    // cout << "Entra el default" << endl;
     break;
   }
-  return aux;
+  }
+  return days;
 }
 
 void getDay(int day)
 {
-  switch (day)
+  switch (day % 7)
   {
   case 0:
   {
@@ -148,31 +207,35 @@ int main(int argc, char const *argv[])
   cout << d2 << '/' << m2 << '/' << y2 << endl;
   // cout << getMonthDays(d1, m1) << endl;
   // cout << getMonthDays(d2, m2) << endl;
-  const int days1 = getMonthDays(d1, m1) + (y1 - 1) * 365;
-  const int days2 = getMonthDays(d2, m2) + (y2 - 1) * 365;
+  // const int days1 = getMonthDays(d1, m1) + (y1 - 1) * 365;
+  // const int days2 = getMonthDays(d2, m2) + (y2 - 1) * 365;
+  const int days1 = d1 + getMonthDays(m1) + (y1 - 1) * 365;
+  const int days2 = d2 + getMonthDays(m2) + (y2 - 1) * 365;
 
   // cout << days1 << endl;
   // cout << days2 << endl;
 
   int diaMayor = 0, diaMenor = 0;
 
-  if (d1 > d2)
+  if (days1 > days2)
   {
-    diaMayor = d1;
-    diaMenor = d2;
+    diaMayor = days1;
+    diaMenor = days2;
   }
   else
   {
-    diaMayor = d2;
-    diaMenor = d1;
+    diaMayor = days2;
+    diaMenor = days1;
   }
 
-  if ((d1 - d2) % 2 == 0)
+  if ((days1 - days2) % 2 == 0)
   {
     getDay(diaMayor);
-  } else {
+  }
+  else
+  {
     getDay(diaMenor);
   }
-
+  cout << "La diferencia es de " << abs(days1 - days2) << " dias" << endl;
   return 0;
 }
