@@ -13,16 +13,16 @@ int main(int argc, char const *argv[])
     cout << "Es numero de Armstromg" << endl;
     return 0;
   }
-  if (to_string(n).length() > 5)
-  {
-    cout << "Entrada invalida" << endl;
-    return 0;
-  }
-  if (n < 0)
-  {
-    // si es negativo
-    n = abs(n);
-  }
+  // if (to_string(n).length() > 5)
+  // {
+  //   cout << "Entrada invalida" << endl;
+  //   return 0;
+  // }
+  // if (n < 0)
+  // {
+  //   // si es negativo
+  //   n = abs(n);
+  // }
   int copia = n, d1 = 0, d2 = 0, d3 = 0, d4 = 0, d5 = 0, c = 0;
   // primera iteracion
   d1 = copia / 10000;
