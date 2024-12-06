@@ -7,15 +7,15 @@ int main(int argc, char const *argv[])
   int f1 = 0, f2 = 0, f3 = 0, m1 = 0, a1 = 0, m2 = 0, a2 = 0, m3 = 0, a3 = 0, fMayor = 0, fMenor = 0, meses1 = 0, meses2 = 0, meses3 = 0;
 
   // Leer fechas
-  // cout << "Fecha 1" << endl;
-  // cin >> f1;
-  // cout << "Fecha 2" << endl;
-  // cin >> f2;
-  // cout << "Fecha 3" << endl;
-  // cin >> f3;
-  f1 = 200201;
-  f2 = 200101;
-  f3 = 200401;
+  cout << "Fecha 1" << endl;
+  cin >> f1;
+  cout << "Fecha 2" << endl;
+  cin >> f2;
+  cout << "Fecha 3" << endl;
+  cin >> f3;
+  // f1 = 200201;
+  // f2 = 200101;
+  // f3 = 200401;
 
   // Obtener fecha 1
   a1 = f1 / 100;
@@ -38,35 +38,29 @@ int main(int argc, char const *argv[])
   meses2 = m2 + (a2 - 2000) * 12;
   meses3 = m3 + (a3 - 2000) * 12;
 
-  cout << "meses1 " << meses1 << endl;
-  cout << "meses2 " << meses2 << endl;
-  cout << "meses3 " << meses3 << endl;
+  // cout << "meses1 " << meses1 << endl;
+  // cout << "meses2 " << meses2 << endl;
+  // cout << "meses3 " << meses3 << endl;
 
   // bucar mayor y menos
 
   if (meses1 > meses2)
   {
-    cout << "meses1 > meses2 " << meses1 << " > " << meses2 << endl;
     fMayor = meses1;
   }
   else
   {
-    cout << "meses1 < meses2 " << meses1 << " < " << meses2 << endl;
     fMayor = meses2;
   }
 
   if (meses3 > fMayor)
   {
-    cout << "meses3 > fMayor " << meses3 << " > " << fMayor << endl;
     if (fMayor > meses1)
     {
-      cout << "fMayor > meses1 " << fMayor << " > " << meses1 << endl;
-
       fMenor = meses1;
     }
     else
     {
-      cout << "fMayor > meses1 " << fMayor << " > " << meses1 << endl;
       fMenor = meses2;
     }
     fMayor = meses3;
