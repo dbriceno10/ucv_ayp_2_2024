@@ -2,10 +2,8 @@
 #include <cmath>
 using namespace std;
 int life = 0, dimensions = 0, objects = 0, cObjects = 0, entranceXY = 0, exitXY = 0, movements = 0, limitX = 0, limitY = 0;
-int wallXY = 0, cWall = 0;
-int teasureXY = 0, cTeasure = 0;
-int trapXY = 0, cTrap = 0;
-int portalAXY = 0, portalBXY = 0, cPortal = 0;
+int cWall = 0, cTeasure = 0, cTrap = 0, cPortal = 0;
+long wallXY = 0, teasureXY = 0, trapXY, portalAXY = 0, portalBXY = 0;
 const char entrance = 'E', out = 'S', wall = '#', teasure = 'T', trap = 'X', portal = 'P';
 
 int readXY()
@@ -105,24 +103,21 @@ int getY(int coord)
   return y;
 }
 
-void isMatch(int x, int y, int objects)
+bool isMatch(int x, int y, long coords)
 {
   int coord = getCoord(x, y);
-  int copy = objects;
+  long copy = coords;
   bool match = 0;
   while (copy > 0)
   {
-    int aux = copy % 100;
+    long aux = copy % 100;
     if (aux == coord)
     {
       match = 1;
     }
     copy = copy / 100;
   }
-  if (match)
-  {
-    cout << "hay match" << endl;
-  }
+  return match;
 }
 
 int main(int argc, char const *argv[])
@@ -163,34 +158,33 @@ int main(int argc, char const *argv[])
     cin >> movement;
     if (movement == 'w')
     {
-      if (y + 1 <= limitY)
+      if ((y + 1 <= limitY) && !isMatch(x, y + 1, wallXY))
       {
         y++;
       }
     }
     if (movement == 's')
     {
-      if (y - 1 >= 0)
+      if ((y - 1 >= 0) && !isMatch(x, y - 1, wallXY))
       {
         y--;
       }
     }
     if (movement == 'd')
     {
-      if (x + 1 <= limitX)
+      if ((x + 1 <= limitX) && !isMatch(x + 1, y, wallXY))
       {
         x++;
       }
     }
     if (movement == 'a')
     {
-      if (x - 1 >= 0)
+      if ((x - 1 >= 0) && !isMatch(x - 1, y, wallXY))
       {
         x--;
       }
     }
     cout << "Posicion " << "(" << x << "," << y << ")" << endl;
-    isMatch(x, y, wallXY);
   }
   cout << "Nro de objetos " << cObjects << endl;
   cout << "Coordenadas de muros # " << wallXY << endl;
