@@ -22,6 +22,7 @@ void getWall(char value)
 {
   if (value == wall)
   {
+    cout << "Muro X Y" << endl;
     int XY = readXY();
     wallXY = wallXY * 100 + XY;
     cWall++;
@@ -33,6 +34,7 @@ void getTeasure(char value)
 {
   if (value == teasure)
   {
+    cout << "Tesoro X Y" << endl;
     int XY = readXY();
     teasureXY = teasureXY * 100 + XY;
     cTeasure++;
@@ -44,6 +46,7 @@ void getTrap(char value)
 {
   if (value == trap)
   {
+    cout << "Trampa X Y" << endl;
     int XY = readXY();
     trapXY = trapXY * 100 + XY;
     cTrap++;
@@ -55,6 +58,7 @@ void getPortal(char value)
 {
   if (value == portal)
   {
+    cout << "Portal XA YA XB YB" << endl;
     int XYA = readXY();
     int XYB = readXY();
     portalAXY = portalAXY * 100 + XYA;
@@ -68,6 +72,7 @@ void getEntrance(char value)
 {
   if (value == entrance)
   {
+    cout << "Entrada X Y" << endl;
     cObjects++;
     entranceXY = readXY();
   }
@@ -76,43 +81,46 @@ void getExit(char value)
 {
   if (value == out)
   {
-    cObjects++;
+    cout << "Salida X Y" << endl;
     exitXY = readXY();
+    cObjects++;
   }
 }
 
 int main(int argc, char const *argv[])
 {
   // Obtener vida inicial
+  cout << "Vida" << endl;
   cin >> life;
   // Obtener las dimensiones
+  cout << "Dimensiones X Y" << endl;
   cin >> aux;
   dimensions = aux;
   cin >> aux;
   dimensions = dimensions * 10 + aux;
   // Obtener el numero de objetos
+  cout << "Nro de Objetos" << endl;
   cin >> objects;
   char value;
-  // Obtener objetos y guardar sus coordenadas
-  while (cin >> value)
+  for (int i = 0; i < objects; i++)
   {
+    cout << "Objeto" << endl;
+    cin >> value;
     getWall(value);
     getEntrance(value);
     getExit(value);
     getTeasure(value);
     getTrap(value);
     getPortal(value);
-    // Cuando hayamos obtenido todos los objetos salimos
-    if (cObjects == objects)
-    {
-      break;
-    }
   }
-  // Obtenemos el numro de movimientos
+  // Obtenemos el numero de movimientos
+  cout << "Nro de Movimientos" << endl;
   cin >> movements;
-  while (cin >> value)
+  for (int i; i < movements; i++)
   {
-    cout << value << endl;
+    cout << "Movimiento w a s d" << endl;
+    cin >> value;
+    cout << "Movimiento seleccionado: " << value << endl;
   }
   cout << "Nro de objetos " << cObjects << endl;
   cout << "Coordenadas de muros # " << wallXY << endl;
