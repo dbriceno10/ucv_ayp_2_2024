@@ -22,7 +22,7 @@ int getCoord(int x, int y)
 int main(int argc, char const *argv[])
 {
   /* code */
-  int pj = 0;
+  int pj = 0, limitX = 5, limitY = 5;
   int x = getX(pj);
   int y = getY(pj);
 
@@ -33,19 +33,31 @@ int main(int argc, char const *argv[])
     cin >> movement;
     if (movement == 'w')
     {
-      y++;
+      if (y + 1 <= limitY)
+      {
+        y++;
+      }
     }
     if (movement == 's')
     {
-      y--;
+      if (y - 1 >= 0)
+      {
+        y--;
+      }
     }
     if (movement == 'd')
     {
-      x++;
+      if (x + 1 <= limitX)
+      {
+        x++;
+      }
     }
     if (movement == 'a')
     {
-      x--;
+      if (x - 1 >= 0)
+      {
+        x--;
+      }
     }
     cout << "Posicion " << "(" << x << "," << y << ")" << endl;
   }
