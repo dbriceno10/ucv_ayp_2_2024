@@ -2,6 +2,7 @@
 #include <cmath>
 using namespace std;
 int life = 0, lifeCopy = 0, dimensions = 0, objects = 0, cObjects = 0, entranceXY = 0, exitXY = 0, movements = 0, limitX = 0, limitY = 0, x = 0, y = 0, eX = 0, eY = 0;
+const int minX = 0, minY = 0;
 int cWall = 0, cTeasure = 0, cTrap = 0, cPortal = 0;
 long wallXY = 0, teasureXY = 0, trapXY, portalAXY = 0, portalBXY = 0;
 const char entrance = 'E', out = 'S', wall = '#', teasure = 'T', trap = 'X', portal = 'P';
@@ -152,6 +153,7 @@ bool isTrapped(int i, int movements, int x, int y, long coords)
   {
     b = 1;
     bool aux = isMatch(x, y, coords);
+    // TODO Debemos validar el caso de encontrar todos los tesoros
     if (aux)
     {
       printMessage(1);
@@ -164,6 +166,20 @@ bool isTrapped(int i, int movements, int x, int y, long coords)
   return b;
 }
 
+bool isGameOver(int x, int y, long coords)
+{
+  bool b = 0;
+  bool aux = isMatch(x, y, coords);
+  // TODO Devemos validar el caso de encontrar todos los tesoros
+  if (aux)
+  {
+    b = 1;
+    printMessage(1);
+  }
+
+  return b;
+}
+
 int main(int argc, char const *argv[])
 {
   // Obtener vida inicial
@@ -173,8 +189,10 @@ int main(int argc, char const *argv[])
   // Obtener las dimensiones
   cout << "Dimensiones X Y" << endl;
   cin >> limitX;
+  limitX--;
   dimensions = limitX;
   cin >> limitY;
+  limitY--;
   dimensions = dimensions * 10 + limitY;
   // Obtener el numero de objetos
   cout << "Nro de Objetos" << endl;
@@ -214,7 +232,7 @@ int main(int argc, char const *argv[])
     }
     if (movement == 's')
     {
-      if ((y - 1 >= 0) && !isMatch(x, y - 1, wallXY))
+      if ((y - 1 >= minY) && !isMatch(x, y - 1, wallXY))
       {
         y--;
       }
@@ -228,16 +246,21 @@ int main(int argc, char const *argv[])
     }
     if (movement == 'a')
     {
-      if ((x - 1 >= 0) && !isMatch(x - 1, y, wallXY))
+      if ((x - 1 >= minX) && !isMatch(x - 1, y, wallXY))
       {
         x--;
       }
     }
     cout << "Posicion " << "(" << x << "," << y << ")" << endl;
+    bool gameOver = isGameOver(x, y, entranceXY);
+    if (gameOver)
+    {
+      // return 1;
+    }
     bool trapped = isTrapped(i, movements, x, y, exitXY);
     if (trapped)
     {
-      return 1;
+      // return 1;
     }
   }
   cout << "Nro de objetos " << cObjects << endl;
@@ -252,5 +275,6 @@ int main(int argc, char const *argv[])
   cout << "Vida inicial " << life << endl;
   cout << "Dimensiones " << dimensions << endl;
   cout << "Movimientos " << movements << endl;
+  cout << "Posicion Final" << "(" << x << "," << y << ")" << endl;
   return 0;
 }
