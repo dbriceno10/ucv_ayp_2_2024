@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cmath>
 using namespace std;
-int life = 0, dimensions = 0, objects = 0, cObjects = 0, entranceXY = 0, exitXY = 0, movements = 0, limitX = 0, limitY = 0;
+int life = 0, lifeCopy = 0, dimensions = 0, objects = 0, cObjects = 0, entranceXY = 0, exitXY = 0, movements = 0, limitX = 0, limitY = 0, x = 0, y = 0, eX = 0, eY = 0;
 int cWall = 0, cTeasure = 0, cTrap = 0, cPortal = 0;
 long wallXY = 0, teasureXY = 0, trapXY, portalAXY = 0, portalBXY = 0;
 const char entrance = 'E', out = 'S', wall = '#', teasure = 'T', trap = 'X', portal = 'P';
@@ -120,11 +120,56 @@ bool isMatch(int x, int y, long coords)
   return match;
 }
 
+void printMessage(int value)
+{
+  switch (value)
+  {
+  case 1:
+  {
+    cout << "LOGRADO" << endl;
+    break;
+  }
+  case 2:
+  {
+    cout << "ATRAPADO" << endl;
+    break;
+  }
+  case 3:
+  {
+    cout << "SORPRENDENTE" << endl;
+    break;
+  }
+  default:
+    cout << "ATRAPADO" << endl;
+    break;
+  }
+}
+
+bool isTrapped(int i, int movements, int x, int y, long coords)
+{
+  bool b = 0;
+  if (i == movements)
+  {
+    b = 1;
+    bool aux = isMatch(x, y, coords);
+    if (aux)
+    {
+      printMessage(1);
+    }
+    else
+    {
+      printMessage(4);
+    }
+  }
+  return b;
+}
+
 int main(int argc, char const *argv[])
 {
   // Obtener vida inicial
   cout << "Vida" << endl;
   cin >> life;
+  lifeCopy = life;
   // Obtener las dimensiones
   cout << "Dimensiones X Y" << endl;
   cin >> limitX;
@@ -134,7 +179,7 @@ int main(int argc, char const *argv[])
   // Obtener el numero de objetos
   cout << "Nro de Objetos" << endl;
   cin >> objects;
-  for (int i = 0; i < objects; i++)
+  for (int i = 1; i <= objects; i++)
   {
     char value;
     cout << "Objeto" << endl;
@@ -150,8 +195,12 @@ int main(int argc, char const *argv[])
   cout << "Nro de Movimientos" << endl;
   cin >> movements;
   // Obtener posicion inicial
-  int x = getX(entranceXY), y = getY(entranceXY);
-  for (int i; i < movements; i++)
+  x = getX(entranceXY);
+  y = getY(entranceXY);
+  // Obtener coordenadas de la salida
+  eX = getX(exitXY);
+  eY = getY(exitXY);
+  for (int i = 1; i <= movements; i++)
   {
     char movement;
     cout << "Movimiento w a s d" << endl;
@@ -185,6 +234,11 @@ int main(int argc, char const *argv[])
       }
     }
     cout << "Posicion " << "(" << x << "," << y << ")" << endl;
+    bool trapped = isTrapped(i, movements, x, y, exitXY);
+    if (trapped)
+    {
+      return 1;
+    }
   }
   cout << "Nro de objetos " << cObjects << endl;
   cout << "Coordenadas de muros # " << wallXY << endl;
