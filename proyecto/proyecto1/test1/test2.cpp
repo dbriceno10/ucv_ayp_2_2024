@@ -19,10 +19,30 @@ int getCoord(int x, int y)
   return coord;
 }
 
+void isMatch(int x, int y, int objects)
+{
+  int coord = getCoord(x, y);
+  int copy = objects;
+  bool match = 0;
+  while (copy > 0)
+  {
+    int aux = copy % 100;
+    if (aux == coord)
+    {
+      match = 1;
+    }
+    copy = copy / 100;
+  }
+  if (match)
+  {
+    cout << "hay match" << endl;
+  }
+}
+
 int main(int argc, char const *argv[])
 {
   /* code */
-  int pj = 0, limitX = 5, limitY = 5;
+  int pj = 0, limitX = 5, limitY = 5, objets = 1223444555;
   int x = getX(pj);
   int y = getY(pj);
 
@@ -60,6 +80,7 @@ int main(int argc, char const *argv[])
       }
     }
     cout << "Posicion " << "(" << x << "," << y << ")" << endl;
+    isMatch(x, y, objets);
   }
   pj = getCoord(x, y);
   cout << "pj: " << pj << endl;

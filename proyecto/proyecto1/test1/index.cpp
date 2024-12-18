@@ -1,7 +1,7 @@
 #include <iostream>
 #include <cmath>
 using namespace std;
-int life = 0, dimensions = 0, objects = 0, cObjects = 0, entranceXY = 0, exitXY = 0, movements = 0, aux = 0;
+int life = 0, dimensions = 0, objects = 0, cObjects = 0, entranceXY = 0, exitXY = 0, movements = 0, limitX = 0, limitY = 0;
 int wallXY = 0, cWall = 0;
 int teasureXY = 0, cTeasure = 0;
 int trapXY = 0, cTrap = 0;
@@ -87,6 +87,44 @@ void getExit(char value)
   }
 }
 
+int getCoord(int x, int y)
+{
+  int coord = x * 10 + y;
+  return coord;
+}
+
+int getX(int coord)
+{
+  int x = coord / 10;
+  return x;
+}
+
+int getY(int coord)
+{
+  int y = coord % 10;
+  return y;
+}
+
+void isMatch(int x, int y, int objects)
+{
+  int coord = getCoord(x, y);
+  int copy = objects;
+  bool match = 0;
+  while (copy > 0)
+  {
+    int aux = copy % 100;
+    if (aux == coord)
+    {
+      match = 1;
+    }
+    copy = copy / 100;
+  }
+  if (match)
+  {
+    cout << "hay match" << endl;
+  }
+}
+
 int main(int argc, char const *argv[])
 {
   // Obtener vida inicial
@@ -94,16 +132,16 @@ int main(int argc, char const *argv[])
   cin >> life;
   // Obtener las dimensiones
   cout << "Dimensiones X Y" << endl;
-  cin >> aux;
-  dimensions = aux;
-  cin >> aux;
-  dimensions = dimensions * 10 + aux;
+  cin >> limitX;
+  dimensions = limitX;
+  cin >> limitY;
+  dimensions = dimensions * 10 + limitY;
   // Obtener el numero de objetos
   cout << "Nro de Objetos" << endl;
   cin >> objects;
-  char value;
   for (int i = 0; i < objects; i++)
   {
+    char value;
     cout << "Objeto" << endl;
     cin >> value;
     getWall(value);
@@ -116,11 +154,43 @@ int main(int argc, char const *argv[])
   // Obtenemos el numero de movimientos
   cout << "Nro de Movimientos" << endl;
   cin >> movements;
+  // Obtener posicion inicial
+  int x = getX(entranceXY), y = getY(entranceXY);
   for (int i; i < movements; i++)
   {
+    char movement;
     cout << "Movimiento w a s d" << endl;
-    cin >> value;
-    cout << "Movimiento seleccionado: " << value << endl;
+    cin >> movement;
+    if (movement == 'w')
+    {
+      if (y + 1 <= limitY)
+      {
+        y++;
+      }
+    }
+    if (movement == 's')
+    {
+      if (y - 1 >= 0)
+      {
+        y--;
+      }
+    }
+    if (movement == 'd')
+    {
+      if (x + 1 <= limitX)
+      {
+        x++;
+      }
+    }
+    if (movement == 'a')
+    {
+      if (x - 1 >= 0)
+      {
+        x--;
+      }
+    }
+    cout << "Posicion " << "(" << x << "," << y << ")" << endl;
+    isMatch(x, y, wallXY);
   }
   cout << "Nro de objetos " << cObjects << endl;
   cout << "Coordenadas de muros # " << wallXY << endl;
