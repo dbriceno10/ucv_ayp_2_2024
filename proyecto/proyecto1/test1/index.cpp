@@ -1,6 +1,7 @@
 #include <iostream>
 #include <cmath>
 using namespace std;
+
 int life = 0, lifeCopy = 0, dimensions = 0, objects = 0, entranceXY = 0, exitXY = 0, movements = 0, limitX = 0, limitY = 0, x = 0, y = 0, eX = 0, eY = 0, code = 0;
 const int minX = 0, minY = 0;
 int cTeasure = 0, cTrap = 0, foundTeasures = 0, foundTraps = 0;
@@ -172,11 +173,11 @@ bool isTrapped(int i, int movements, int x, int y, long coords)
   return b;
 }
 
+//*Gana el juego
 bool isWinner(int x, int y)
 {
   bool b = 0;
   bool aux = isMatch(x, y, exitXY);
-  // TODO Devemos validar el caso de encontrar todos los tesoros
   if (aux)
   {
     b = 1;
@@ -186,12 +187,14 @@ bool isWinner(int x, int y)
     }
     else
     {
+      // Encontro todos los tesoros
       code = 3;
     }
   }
   return b;
 }
 
+//*Validar si el jugador cae en una trampa
 void isTrap(int x, int y)
 {
   bool aux = isMatch(x, y, trapXY);
@@ -221,13 +224,13 @@ void addLife()
 //*Validar si encontramos un tesoro
 void isTeasure(int x, int y)
 {
-  //*Validamos si habiamos encontrado un tesoro antes
+  // Validamos si habiamos encontrado un tesoro antes
   if (teasureObtainedXY < 0)
   {
     bool aux = isMatch(x, y, teasureXY);
     if (aux)
     {
-      //*Encontramos un tesoro por primera vez, guardamos sus coordenadas para saber que ya lo encontramos
+      // Encontramos un tesoro por primera vez, guardamos sus coordenadas para saber que ya lo encontramos
       teasureObtainedXY = getCoord(x, y);
       addLife();
       foundTeasures++;
@@ -259,10 +262,10 @@ int main(int argc, char const *argv[])
   // Obtener las dimensiones
   cout << "Dimensiones M N" << endl;
   cin >> limitX;
-  limitX--;
+  limitX;
   dimensions = limitX;
   cin >> limitY;
-  limitY--;
+  limitY;
   dimensions = dimensions * 10 + limitY;
   // Obtener el numero de objetos
   cout << "Nro de Objetos" << endl;
@@ -286,8 +289,8 @@ int main(int argc, char const *argv[])
   x = getX(entranceXY);
   y = getY(entranceXY);
   // Obtener coordenadas de la salida
-  eX = getX(exitXY);
-  eY = getY(exitXY);
+  // eX = getX(exitXY);
+  // eY = getY(exitXY);
   for (int i = 1; i <= movements; i++)
   {
     char movement;
@@ -295,7 +298,7 @@ int main(int argc, char const *argv[])
     cin >> movement;
     if (movement == 'w')
     {
-      if ((y + 1 <= limitY) && !isMatch(x, y + 1, wallXY))
+      if ((y + 1 <= limitY - 1) && !isMatch(x, y + 1, wallXY))
       {
         y++;
       }
@@ -317,7 +320,7 @@ int main(int argc, char const *argv[])
     }
     if (movement == 'd')
     {
-      if ((x + 1 <= limitX) && !isMatch(x + 1, y, wallXY))
+      if ((x + 1 <= limitX - 1) && !isMatch(x + 1, y, wallXY))
       {
         x++;
       }
