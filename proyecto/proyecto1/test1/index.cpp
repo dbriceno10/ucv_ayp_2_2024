@@ -154,17 +154,25 @@ void printMessage(int value)
 }
 
 //*Validamos si el usuario consumio todos sus movimientos
-bool isTrapped(int i, int movements, int x, int y, long coords)
+bool isTrapped(int i)
 {
   bool b = 0;
   if (i == movements)
   {
     b = 1;
-    bool aux = isMatch(x, y, coords);
+    bool aux = isMatch(x, y, exitXY);
     // TODO Debemos validar el caso de encontrar todos los tesoros
     if (aux)
     {
-      code = 1;
+      if (foundTeasures < cTeasure)
+      {
+        code = 1;
+      }
+      else
+      {
+        // Encontro todos los tesoros
+        code = 3;
+      }
     }
     else
     {
@@ -175,7 +183,7 @@ bool isTrapped(int i, int movements, int x, int y, long coords)
 }
 
 //*Gana el juego
-bool isWinner(int x, int y)
+bool isWinner()
 {
   bool b = 0;
   bool aux = isMatch(x, y, exitXY);
@@ -196,7 +204,7 @@ bool isWinner(int x, int y)
 }
 
 //*Validar si el jugador cae en una trampa
-void isTrap(int x, int y)
+void isTrap()
 {
   bool aux = isMatch(x, y, trapXY);
   if (aux)
@@ -223,7 +231,7 @@ void addLife()
 }
 
 //*Validar si encontramos un tesoro
-void isTeasure(int x, int y)
+void isTeasure()
 {
   // Validamos si habiamos encontrado un tesoro antes
   if (teasureObtainedXY < 0)
@@ -257,7 +265,6 @@ void isTeasure(int x, int y)
 //*Validar si cae en un portal y cambiar posicion
 void isPortal()
 {
-
   int coord = getCoord(x, y);
   long copyA = portalAXY;
   long copyB = portalBXY;
@@ -371,20 +378,20 @@ int main(int argc, char const *argv[])
         printMessage(5);
       }
     }
-    isTeasure(x, y);
-    bool winner = isWinner(x, y);
+    isTeasure();
+    bool winner = isWinner();
     if (winner)
     {
       cout << "Posicion " << "(" << x << "," << y << ")" << " Vida: " << lifeCopy << endl;
       break;
     }
-    bool trapped = isTrapped(i, movements, x, y, exitXY);
+    bool trapped = isTrapped(i);
     if (trapped)
     {
       cout << "Posicion " << "(" << x << "," << y << ")" << " Vida: " << lifeCopy << endl;
       break;
     }
-    isTrap(x, y);
+    isTrap();
     if (lifeCopy <= 0)
     {
       cout << "Posicion " << "(" << x << "," << y << ")" << " Vida: " << lifeCopy << endl;
