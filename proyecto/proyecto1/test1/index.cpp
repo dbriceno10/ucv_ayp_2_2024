@@ -347,7 +347,7 @@ int main(int argc, char const *argv[])
     bool trapped = isTrapped(i, movements, x, y, exitXY);
     if (trapped)
     {
-      cout << "Posicion " << "(" << x << "," << y << ")" << " ida: " << lifeCopy << endl;
+      cout << "Posicion " << "(" << x << "," << y << ")" << " Vida: " << lifeCopy << endl;
       break;
     }
     isTrap(x, y);
