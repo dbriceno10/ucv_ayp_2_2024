@@ -1,9 +1,9 @@
 #include <iostream>
 #include <cmath>
 using namespace std;
-int life = 0, lifeCopy = 0, dimensions = 0, objects = 0, cObjects = 0, entranceXY = 0, exitXY = 0, movements = 0, limitX = 0, limitY = 0, x = 0, y = 0, eX = 0, eY = 0;
+int life = 0, lifeCopy = 0, dimensions = 0, objects = 0, entranceXY = 0, exitXY = 0, movements = 0, limitX = 0, limitY = 0, x = 0, y = 0, eX = 0, eY = 0, code = 0;
 const int minX = 0, minY = 0;
-int cWall = 0, cTeasure = 0, cTrap = 0, cPortal = 0;
+int cTeasure = 0, cTrap = 0, foundTeasures = 0, foundTraps = 0;
 long wallXY = 0, teasureXY = 0, trapXY, portalAXY = 0, portalBXY = 0, teasureObtainedXY = -1;
 const char entrance = 'E', out = 'S', wall = '#', teasure = 'T', trap = 'X', portal = 'P';
 
@@ -26,8 +26,6 @@ void getWall(char value)
     cout << "Muro X Y" << endl;
     int XY = readXY();
     wallXY = wallXY * 100 + XY;
-    cWall++;
-    cObjects++;
   }
 }
 
@@ -40,7 +38,6 @@ void getTeasure(char value)
     int XY = readXY();
     teasureXY = teasureXY * 100 + XY;
     cTeasure++;
-    cObjects++;
   }
 }
 
@@ -53,7 +50,6 @@ void getTrap(char value)
     int XY = readXY();
     trapXY = trapXY * 100 + XY;
     cTrap++;
-    cObjects++;
   }
 }
 
@@ -67,8 +63,6 @@ void getPortal(char value)
     int XYB = readXY();
     portalAXY = portalAXY * 100 + XYA;
     portalBXY = portalBXY * 100 + XYB;
-    cPortal++;
-    cObjects++;
   }
 }
 
@@ -78,7 +72,6 @@ void getEntrance(char value)
   if (value == entrance)
   {
     cout << "Entrada X Y" << endl;
-    cObjects++;
     entranceXY = readXY();
   }
 }
@@ -90,7 +83,6 @@ void getExit(char value)
   {
     cout << "Salida X Y" << endl;
     exitXY = readXY();
-    cObjects++;
   }
 }
 
@@ -170,11 +162,11 @@ bool isTrapped(int i, int movements, int x, int y, long coords)
     // TODO Debemos validar el caso de encontrar todos los tesoros
     if (aux)
     {
-      printMessage(1);
+      code = 1;
     }
     else
     {
-      printMessage(4);
+      code = 4;
     }
   }
   return b;
@@ -188,7 +180,14 @@ bool isWinner(int x, int y)
   if (aux)
   {
     b = 1;
-    printMessage(1);
+    if (foundTeasures < cTeasure)
+    {
+      code = 1;
+    }
+    else
+    {
+      code = 3;
+    }
   }
   return b;
 }
@@ -199,10 +198,11 @@ void isTrap(int x, int y)
   if (aux)
   {
     lifeCopy -= 10;
-  }
-  if (lifeCopy < 0)
-  {
-    lifeCopy = 0;
+    if (lifeCopy < 0)
+    {
+      lifeCopy = 0;
+    }
+    foundTraps++;
   }
 }
 
@@ -230,6 +230,7 @@ void isTeasure(int x, int y)
       //*Encontramos un tesoro por primera vez, guardamos sus coordenadas para saber que ya lo encontramos
       teasureObtainedXY = getCoord(x, y);
       addLife();
+      foundTeasures++;
     }
   }
   else
@@ -243,6 +244,7 @@ void isTeasure(int x, int y)
       {
         teasureObtainedXY = teasureObtainedXY * 100 + getCoord(x, y);
         addLife();
+        foundTeasures++;
       }
     }
   }
@@ -339,19 +341,19 @@ int main(int argc, char const *argv[])
     bool winner = isWinner(x, y);
     if (winner)
     {
-      cout << "Posicion " << "(" << x << "," << y << ")" << "Vida: " << lifeCopy << endl;
+      cout << "Posicion " << "(" << x << "," << y << ")" << " Vida: " << lifeCopy << endl;
       break;
     }
     bool trapped = isTrapped(i, movements, x, y, exitXY);
     if (trapped)
     {
-      cout << "Posicion " << "(" << x << "," << y << ")" << "Vida: " << lifeCopy << endl;
+      cout << "Posicion " << "(" << x << "," << y << ")" << " ida: " << lifeCopy << endl;
       break;
     }
     isTrap(x, y);
     if (lifeCopy <= 0)
     {
-      cout << "Posicion " << "(" << x << "," << y << ")" << "Vida: " << lifeCopy << endl;
+      cout << "Posicion " << "(" << x << "," << y << ")" << " Vida: " << lifeCopy << endl;
 
       printMessage(2);
       break;
@@ -370,6 +372,10 @@ int main(int argc, char const *argv[])
   // cout << "Vida inicial " << life << endl;
   // cout << "Dimensiones " << dimensions << endl;
   // cout << "Movimientos " << movements << endl;
-  cout << "Posicion Final" << "(" << x << "," << y << ")" << " Vida: " << lifeCopy << endl;
+  // cout << "Posicion Final" << "(" << x << "," << y << ")" << " Vida: " << lifeCopy << endl;
+  cout << "TESOROS: " << foundTeasures << endl;
+  cout << "TRAMPAS: " << foundTraps << endl;
+  cout << "VIDA: " << lifeCopy << endl;
+  printMessage(code);
   return 0;
 }
