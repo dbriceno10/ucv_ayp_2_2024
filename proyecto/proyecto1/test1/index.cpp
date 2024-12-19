@@ -192,9 +192,9 @@ bool isGameOver(int x, int y, long coords)
   return b;
 }
 
-void isTrap(int x, int y, long coords)
+void isTrap(int x, int y)
 {
-  bool aux = isMatch(x, y, coords);
+  bool aux = isMatch(x, y, trapXY);
   if (aux)
   {
     lifeCopy -= 10;
@@ -217,16 +217,15 @@ void addLife()
   }
 }
 
-void isTeasure(int x, int y, long coords)
+void isTeasure(int x, int y)
 {
   cout << "---VALIDANDO TESOROS---" << endl;
   cout << "X: " << x << " Y: " << y << endl;
   cout << "teasures " << teasureObtainedXY << endl;
-  bool aux = 0;
   if (teasureObtainedXY < 0)
   {
     cout << "teasureObtainedXY < 0" << endl;
-    aux = isMatch(x, y, teasureXY);
+    bool aux = isMatch(x, y, teasureXY);
     if (aux)
     {
       teasureObtainedXY = getCoord(x, y);
@@ -241,9 +240,13 @@ void isTeasure(int x, int y, long coords)
     cout << "found: " << found << endl;
     if (!found)
     {
-      teasureObtainedXY = teasureObtainedXY * 100 + getCoord(x, y);
-      cout << "addLife 2" << endl;
-      addLife();
+      bool aux = isMatch(x, y, teasureXY);
+      if (aux)
+      {
+        teasureObtainedXY = teasureObtainedXY * 100 + getCoord(x, y);
+        cout << "addLife 2" << endl;
+        addLife();
+      }
     }
   }
 }
@@ -335,7 +338,7 @@ int main(int argc, char const *argv[])
         printMessage(5);
       }
     }
-    isTeasure(x, y, teasureXY);
+    isTeasure(x, y);
     bool gameOver = isGameOver(x, y, entranceXY);
     if (gameOver)
     {
@@ -348,7 +351,7 @@ int main(int argc, char const *argv[])
       cout << "Posicion " << "(" << x << "," << y << ")" << "Vida: " << lifeCopy << endl;
       break;
     }
-    isTrap(x, y, trapXY);
+    isTrap(x, y);
     if (lifeCopy <= 0)
     {
       cout << "Posicion " << "(" << x << "," << y << ")" << "Vida: " << lifeCopy << endl;
