@@ -180,10 +180,10 @@ bool isTrapped(int i, int movements, int x, int y, long coords)
   return b;
 }
 
-bool isGameOver(int x, int y, long coords)
+bool isWinner(int x, int y)
 {
   bool b = 0;
-  bool aux = isMatch(x, y, coords);
+  bool aux = isMatch(x, y, exitXY);
   // TODO Devemos validar el caso de encontrar todos los tesoros
   if (aux)
   {
@@ -336,8 +336,8 @@ int main(int argc, char const *argv[])
       }
     }
     isTeasure(x, y);
-    bool gameOver = isGameOver(x, y, entranceXY);
-    if (gameOver)
+    bool winner = isWinner(x, y);
+    if (winner)
     {
       cout << "Posicion " << "(" << x << "," << y << ")" << "Vida: " << lifeCopy << endl;
       break;
