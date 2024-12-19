@@ -4,7 +4,7 @@ using namespace std;
 
 int life = 0, lifeCopy = 0, dimensions = 0, objects = 0, entranceXY = 0, exitXY = 0, movements = 0, limitX = 0, limitY = 0, x = 0, y = 0, eX = 0, eY = 0, code = 0;
 const int minX = 0, minY = 0;
-int cTeasure = 0, cTrap = 0, foundTeasures = 0, foundTraps = 0;
+int cTeasure = 0, cTrap = 0, foundTeasures = 0, foundTraps = 0, cPortal = 0;
 long wallXY = 0, teasureXY = 0, trapXY, portalAXY = 0, portalBXY = 0, teasureObtainedXY = -1;
 const char entrance = 'E', out = 'S', wall = '#', teasure = 'T', trap = 'X', portal = 'P';
 
@@ -64,6 +64,7 @@ void getPortal(char value)
     int XYB = readXY();
     portalAXY = portalAXY * 100 + XYA;
     portalBXY = portalBXY * 100 + XYB;
+    cPortal++;
   }
 }
 
@@ -253,6 +254,34 @@ void isTeasure(int x, int y)
   }
 }
 
+//*Validar si cae en un portal y cambiar posicion
+void isPortal()
+{
+
+  int coord = getCoord(x, y);
+  long copyA = portalAXY;
+  long copyB = portalBXY;
+  for (int i = 1; i <= cPortal; i++)
+  {
+    int coordA = copyA % 100;
+    int coordB = copyB % 100;
+    if (coordA == coord)
+    {
+      cout << "Posicion del portal (" << x << "," << y << ")" << endl;
+      x = getX(coordB);
+      y = getY(coordB);
+      break;
+    }
+    if (coordB == coord)
+    {
+      cout << "Posicion del portal (" << x << "," << y << ")" << endl;
+      x = getX(coordA);
+      y = getY(coordA);
+      break;
+    }
+  }
+}
+
 int main(int argc, char const *argv[])
 {
   // Obtener vida inicial
@@ -361,7 +390,9 @@ int main(int argc, char const *argv[])
       printMessage(2);
       break;
     }
-    cout << "Posicion " << "(" << x << "," << y << ")" << " Vida: " << lifeCopy << endl;
+    isPortal();
+    cout
+        << "Posicion " << "(" << x << "," << y << ")" << " Vida: " << lifeCopy << endl;
   }
   // cout << "Nro de objetos " << cObjects << endl;
   // cout << "Coordenadas de muros # " << wallXY << endl;
