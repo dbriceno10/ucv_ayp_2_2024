@@ -4,12 +4,13 @@ using namespace std;
 int life = 0, lifeCopy = 0, dimensions = 0, objects = 0, cObjects = 0, entranceXY = 0, exitXY = 0, movements = 0, limitX = 0, limitY = 0, x = 0, y = 0, eX = 0, eY = 0;
 const int minX = 0, minY = 0;
 int cWall = 0, cTeasure = 0, cTrap = 0, cPortal = 0;
-long wallXY = 0, teasureXY = 0, trapXY, portalAXY = 0, portalBXY = 0;
+long wallXY = 0, teasureXY = 0, trapXY, portalAXY = 0, portalBXY = 0, teasureObtainedXY = -1;
 const char entrance = 'E', out = 'S', wall = '#', teasure = 'T', trap = 'X', portal = 'P';
 
+//*Leer coordenadas para los objetos
 int readXY()
 {
-  int aux = 0, coord = -1;
+  int aux = 0, coord = 0;
   cin >> aux;
   coord = aux;
   cin >> aux;
@@ -17,6 +18,7 @@ int readXY()
   return coord;
 }
 
+//*Guardar coordenadas de muros
 void getWall(char value)
 {
   if (value == wall)
@@ -29,6 +31,7 @@ void getWall(char value)
   }
 }
 
+//*Guardar corrdenadas de tesoros
 void getTeasure(char value)
 {
   if (value == teasure)
@@ -41,6 +44,7 @@ void getTeasure(char value)
   }
 }
 
+//*Guardar coordenadas de trampas
 void getTrap(char value)
 {
   if (value == trap)
@@ -53,6 +57,7 @@ void getTrap(char value)
   }
 }
 
+//*Guardar coordenadas de portales
 void getPortal(char value)
 {
   if (value == portal)
@@ -67,6 +72,7 @@ void getPortal(char value)
   }
 }
 
+//*Guardar las corrdenadas de la entrada
 void getEntrance(char value)
 {
   if (value == entrance)
@@ -76,6 +82,8 @@ void getEntrance(char value)
     entranceXY = readXY();
   }
 }
+
+//*Guardar las coordenadas de la salida
 void getExit(char value)
 {
   if (value == out)
@@ -132,7 +140,7 @@ void printMessage(int value)
   }
   case 2:
   {
-    cout << "ATRAPADO" << endl;
+    cout << "MUERTO" << endl;
     break;
   }
   case 3:
@@ -140,8 +148,13 @@ void printMessage(int value)
     cout << "SORPRENDENTE" << endl;
     break;
   }
-  default:
+  case 4:
+  {
     cout << "ATRAPADO" << endl;
+    break;
+  }
+  default:
+    cout << "Movimiento Bloqueado" << endl;
     break;
   }
 }
@@ -176,8 +189,63 @@ bool isGameOver(int x, int y, long coords)
     b = 1;
     printMessage(1);
   }
-
   return b;
+}
+
+void isTrap(int x, int y, long coords)
+{
+  bool aux = isMatch(x, y, coords);
+  if (aux)
+  {
+    lifeCopy -= 10;
+  }
+  if (lifeCopy < 0)
+  {
+    lifeCopy = 0;
+  }
+}
+
+void addLife()
+{
+  if (lifeCopy + 20 >= life)
+  {
+    lifeCopy = life;
+  }
+  else
+  {
+    lifeCopy += 20;
+  }
+}
+
+void isTeasure(int x, int y, long coords)
+{
+  cout << "---VALIDANDO TESOROS---" << endl;
+  cout << "X: " << x << " Y: " << y << endl;
+  cout << "teasures " << teasureObtainedXY << endl;
+  bool aux = 0;
+  if (teasureObtainedXY < 0)
+  {
+    cout << "teasureObtainedXY < 0" << endl;
+    aux = isMatch(x, y, teasureXY);
+    if (aux)
+    {
+      teasureObtainedXY = getCoord(x, y);
+      cout << "addLife 1" << endl;
+      addLife();
+    }
+  }
+  else
+  {
+    cout << "teasureObtainedXY >= 0" << endl;
+    bool found = isMatch(x, y, teasureObtainedXY);
+    cout << "found: " << found << endl;
+    if (!found)
+    {
+      teasureObtainedXY = teasureObtainedXY * 100 + getCoord(x, y);
+      cout << "addLife 2" << endl;
+      addLife();
+    }
+  }
 }
 
 int main(int argc, char const *argv[])
@@ -187,7 +255,7 @@ int main(int argc, char const *argv[])
   cin >> life;
   lifeCopy = life;
   // Obtener las dimensiones
-  cout << "Dimensiones X Y" << endl;
+  cout << "Dimensiones M N" << endl;
   cin >> limitX;
   limitX--;
   dimensions = limitX;
@@ -229,12 +297,20 @@ int main(int argc, char const *argv[])
       {
         y++;
       }
+      else
+      {
+        printMessage(5);
+      }
     }
     if (movement == 's')
     {
       if ((y - 1 >= minY) && !isMatch(x, y - 1, wallXY))
       {
         y--;
+      }
+      else
+      {
+        printMessage(5);
       }
     }
     if (movement == 'd')
@@ -243,6 +319,10 @@ int main(int argc, char const *argv[])
       {
         x++;
       }
+      else
+      {
+        printMessage(5);
+      }
     }
     if (movement == 'a')
     {
@@ -250,31 +330,46 @@ int main(int argc, char const *argv[])
       {
         x--;
       }
+      else
+      {
+        printMessage(5);
+      }
     }
-    cout << "Posicion " << "(" << x << "," << y << ")" << endl;
+    isTeasure(x, y, teasureXY);
     bool gameOver = isGameOver(x, y, entranceXY);
     if (gameOver)
     {
-      // return 1;
+      cout << "Posicion " << "(" << x << "," << y << ")" << "Vida: " << lifeCopy << endl;
+      break;
     }
     bool trapped = isTrapped(i, movements, x, y, exitXY);
     if (trapped)
     {
-      // return 1;
+      cout << "Posicion " << "(" << x << "," << y << ")" << "Vida: " << lifeCopy << endl;
+      break;
     }
+    isTrap(x, y, trapXY);
+    if (lifeCopy <= 0)
+    {
+      cout << "Posicion " << "(" << x << "," << y << ")" << "Vida: " << lifeCopy << endl;
+
+      printMessage(2);
+      break;
+    }
+    cout << "Posicion " << "(" << x << "," << y << ")" << " Vida: " << lifeCopy << endl;
   }
-  cout << "Nro de objetos " << cObjects << endl;
-  cout << "Coordenadas de muros # " << wallXY << endl;
-  cout << "Coordenadas de trampas X " << trapXY << endl;
-  cout << "Coordenadas de tesoros T " << teasureXY << endl;
-  cout << "Coordenadas de portal A P " << portalAXY << endl;
-  cout << "Coordenadas de portal B P " << portalBXY << endl;
-  cout << "Entrada E" << entranceXY << endl;
-  cout << "Salida S" << exitXY << endl;
-  cout << "Cantidad de objetos " << objects << endl;
-  cout << "Vida inicial " << life << endl;
-  cout << "Dimensiones " << dimensions << endl;
-  cout << "Movimientos " << movements << endl;
-  cout << "Posicion Final" << "(" << x << "," << y << ")" << endl;
+  // cout << "Nro de objetos " << cObjects << endl;
+  // cout << "Coordenadas de muros # " << wallXY << endl;
+  // cout << "Coordenadas de trampas X " << trapXY << endl;
+  // cout << "Coordenadas de tesoros T " << teasureXY << endl;
+  // cout << "Coordenadas de portal A P " << portalAXY << endl;
+  // cout << "Coordenadas de portal B P " << portalBXY << endl;
+  // cout << "Entrada E" << entranceXY << endl;
+  // cout << "Salida S" << exitXY << endl;
+  // cout << "Cantidad de objetos " << objects << endl;
+  // cout << "Vida inicial " << life << endl;
+  // cout << "Dimensiones " << dimensions << endl;
+  // cout << "Movimientos " << movements << endl;
+  cout << "Posicion Final" << "(" << x << "," << y << ")" << " Vida: " << lifeCopy << endl;
   return 0;
 }
