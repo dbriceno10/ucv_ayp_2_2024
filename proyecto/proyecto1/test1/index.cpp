@@ -159,6 +159,7 @@ void printMessage(int value)
   }
 }
 
+//*Validamos si el usuario consumio todos sus movimientos
 bool isTrapped(int i, int movements, int x, int y, long coords)
 {
   bool b = 0;
@@ -217,34 +218,30 @@ void addLife()
   }
 }
 
+//*Validar si encontramos un tesoro
 void isTeasure(int x, int y)
 {
-  cout << "---VALIDANDO TESOROS---" << endl;
-  cout << "X: " << x << " Y: " << y << endl;
-  cout << "teasures " << teasureObtainedXY << endl;
+  //*Validamos si habiamos encontrado un tesoro antes
   if (teasureObtainedXY < 0)
   {
-    cout << "teasureObtainedXY < 0" << endl;
     bool aux = isMatch(x, y, teasureXY);
     if (aux)
     {
+      //*Encontramos un tesoro por primera vez, guardamos sus coordenadas para saber que ya lo encontramos
       teasureObtainedXY = getCoord(x, y);
-      cout << "addLife 1" << endl;
       addLife();
     }
   }
   else
   {
-    cout << "teasureObtainedXY >= 0" << endl;
     bool found = isMatch(x, y, teasureObtainedXY);
-    cout << "found: " << found << endl;
     if (!found)
     {
+      //*Encontramos un tesoro, guardamos sus coordenadas
       bool aux = isMatch(x, y, teasureXY);
       if (aux)
       {
         teasureObtainedXY = teasureObtainedXY * 100 + getCoord(x, y);
-        cout << "addLife 2" << endl;
         addLife();
       }
     }
