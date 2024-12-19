@@ -279,6 +279,8 @@ void isPortal()
       y = getY(coordA);
       break;
     }
+    copyA = copyA / 100;
+    copyB = copyB / 100;
   }
 }
 
