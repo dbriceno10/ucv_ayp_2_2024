@@ -106,6 +106,7 @@ int getY(int coord)
   return y;
 }
 
+//*Saber si tenemos una coincidencia con la posicion actual respecto a alguna posicion guardada
 bool isMatch(int x, int y, long coords)
 {
   int coord = getCoord(x, y);
@@ -147,8 +148,12 @@ void printMessage(int value)
     cout << "ATRAPADO" << endl;
     break;
   }
-  default:
+  case 5:
+  {
     cout << "Movimiento Bloqueado" << endl;
+    break;
+  }
+  default:
     break;
   }
 }
@@ -161,7 +166,6 @@ bool isTrapped(int i)
   {
     b = 1;
     bool aux = isMatch(x, y, exitXY);
-    // TODO Debemos validar el caso de encontrar todos los tesoros
     if (aux)
     {
       if (foundTeasures < cTeasure)
@@ -336,7 +340,7 @@ int main(int argc, char const *argv[])
     cin >> movement;
     if (movement == 'w')
     {
-      if ((y + 1 <= limitY - 1) && !isMatch(x, y + 1, wallXY))
+      if ((y + 1 <= limitY) && !isMatch(x, y + 1, wallXY))
       {
         y++;
       }
@@ -358,7 +362,7 @@ int main(int argc, char const *argv[])
     }
     if (movement == 'd')
     {
-      if ((x + 1 <= limitX - 1) && !isMatch(x + 1, y, wallXY))
+      if ((x + 1 <= limitX) && !isMatch(x + 1, y, wallXY))
       {
         x++;
       }
@@ -382,26 +386,25 @@ int main(int argc, char const *argv[])
     bool winner = isWinner();
     if (winner)
     {
-      cout << "Posicion " << "(" << x << "," << y << ")" << " Vida: " << lifeCopy << endl;
+      cout << "Posicion " << "(" << x << "," << y << ")" << " Vida: " << lifeCopy << " movimientos restantes: " << movements - i << endl;
       break;
     }
     bool trapped = isTrapped(i);
     if (trapped)
     {
-      cout << "Posicion " << "(" << x << "," << y << ")" << " Vida: " << lifeCopy << endl;
+      cout << "Posicion " << "(" << x << "," << y << ")" << " Vida: " << lifeCopy << " movimientos restantes: " << movements - i << endl;
       break;
     }
     isTrap();
     if (lifeCopy <= 0)
     {
-      cout << "Posicion " << "(" << x << "," << y << ")" << " Vida: " << lifeCopy << endl;
+      cout << "Posicion " << "(" << x << "," << y << ")" << " Vida: " << lifeCopy << " movimientos restantes: " << movements - i << endl;
 
-      printMessage(2);
+      code = 2;
       break;
     }
     isPortal();
-    cout
-        << "Posicion " << "(" << x << "," << y << ")" << " Vida: " << lifeCopy << endl;
+    cout << "Posicion " << "(" << x << "," << y << ")" << " Vida: " << lifeCopy << " movimientos restantes: " << movements - i << endl;
   }
   // cout << "Nro de objetos " << cObjects << endl;
   // cout << "Coordenadas de muros # " << wallXY << endl;
