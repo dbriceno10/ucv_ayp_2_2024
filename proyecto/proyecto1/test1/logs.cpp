@@ -2,9 +2,9 @@
 #include <cmath>
 using namespace std;
 
-int life = 0, lifeCopy = 0, objects = 0, entranceXY = 0, exitXY = 0, movements = 0, limitX = 0, limitY = 0, x = 0, y = 0, code = 0;
+int life = 0, lifeCopy = 0, dimensions = 0, objects = 0, entranceXY = 0, exitXY = 0, movements = 0, limitX = 0, limitY = 0, x = 0, y = 0, eX = 0, eY = 0, code = 0;
 const int minX = 0, minY = 0;
-int cTeasure = 0, foundTeasures = 0, foundTraps = 0, cPortal = 0;
+int cTeasure = 0, cTrap = 0, foundTeasures = 0, foundTraps = 0, cPortal = 0;
 long wallXY = 0, teasureXY = 0, trapXY, portalAXY = 0, portalBXY = 0, teasureObtainedXY = -1;
 const char entrance = 'E', out = 'S', wall = '#', teasure = 'T', trap = 'X', portal = 'P';
 
@@ -50,6 +50,7 @@ void getTrap(char value)
     cout << "Trampa X Y" << endl;
     int XY = readXY();
     trapXY = trapXY * 100 + XY;
+    cTrap++;
   }
 }
 
@@ -87,28 +88,25 @@ void getExit(char value)
   }
 }
 
-//*Entrada x,y salida xy
 int getCoord(int x, int y)
 {
   int coord = x * 10 + y;
   return coord;
 }
 
-//*Entrada x,y salida x
 int getX(int coord)
 {
   int x = coord / 10;
   return x;
 }
 
-//*Entrada x,y salida y
 int getY(int coord)
 {
   int y = coord % 10;
   return y;
 }
 
-//*Saber si tenemos una coincidencia con la posicion actual respecto a alguna posicion guardada, si caemos en algun objeto
+//*Saber si tenemos una coincidencia con la posicion actual respecto a alguna posicion guardada
 bool isMatch(int x, int y, long coords)
 {
   int coord = getCoord(x, y);
@@ -126,7 +124,6 @@ bool isMatch(int x, int y, long coords)
   return match;
 }
 
-//*Para imprimir los mensajes necesarios segun sea el caso
 void printMessage(int value)
 {
   switch (value)
@@ -165,7 +162,6 @@ void printMessage(int value)
 bool isTrapped(int i)
 {
   bool b = 0;
-  // Si consumio tidos sus movimientos, vamos terminar el programa, validamos si gano o quedo atrapado
   if (i == movements)
   {
     b = 1;
@@ -174,7 +170,6 @@ bool isTrapped(int i)
     {
       if (foundTeasures < cTeasure)
       {
-        // LLego a la salida sin encontrar todos los tesoros
         code = 1;
       }
       else
@@ -185,7 +180,6 @@ bool isTrapped(int i)
     }
     else
     {
-      // Quedo atrapado
       code = 4;
     }
   }
@@ -202,7 +196,6 @@ bool isWinner()
     b = 1;
     if (foundTeasures < cTeasure)
     {
-      // No encontro todos los tesoros
       code = 1;
     }
     else
@@ -229,7 +222,6 @@ void isTrap()
   }
 }
 
-//*Sumar vida si el jugador encuentra un tesoro
 void addLife()
 {
   if (lifeCopy + 20 >= life)
@@ -262,7 +254,7 @@ void isTeasure()
     bool found = isMatch(x, y, teasureObtainedXY);
     if (!found)
     {
-      // Encontramos un tesoro, guardamos sus coordenadas
+      //*Encontramos un tesoro, guardamos sus coordenadas
       bool aux = isMatch(x, y, teasureXY);
       if (aux)
       {
@@ -280,19 +272,20 @@ void isPortal()
   int coord = getCoord(x, y);
   long copyA = portalAXY;
   long copyB = portalBXY;
-  // Recorremos las coordenadas de los portales guardados, si encontramos una cocincidencia a, salimos a la posicion en b y viceversa
   for (int i = 1; i <= cPortal; i++)
   {
     int coordA = copyA % 100;
     int coordB = copyB % 100;
     if (coordA == coord)
     {
+      cout << "Posicion del portal (" << x << "," << y << ")" << endl;
       x = getX(coordB);
       y = getY(coordB);
       break;
     }
     if (coordB == coord)
     {
+      cout << "Posicion del portal (" << x << "," << y << ")" << endl;
       x = getX(coordA);
       y = getY(coordA);
       break;
@@ -305,19 +298,24 @@ void isPortal()
 int main(int argc, char const *argv[])
 {
   // Obtener vida inicial
+  cout << "Vida" << endl;
   cin >> life;
   lifeCopy = life;
-  // Limites del mapa
+  // Obtener las dimensiones
+  cout << "Dimensiones M N" << endl;
   cin >> limitX;
   limitX;
+  dimensions = limitX;
   cin >> limitY;
   limitY;
+  dimensions = dimensions * 10 + limitY;
   // Obtener el numero de objetos
+  cout << "Nro de Objetos" << endl;
   cin >> objects;
-  // Obtener los objetos y guadar sus posiciones
   for (int i = 1; i <= objects; i++)
   {
     char value;
+    cout << "Objeto" << endl;
     cin >> value;
     getWall(value);
     getEntrance(value);
@@ -327,15 +325,18 @@ int main(int argc, char const *argv[])
     getPortal(value);
   }
   // Obtenemos el numero de movimientos
+  cout << "Nro de Movimientos" << endl;
   cin >> movements;
   // Obtener posicion inicial
   x = getX(entranceXY);
   y = getY(entranceXY);
-  // Valdiamos los movimientos del usuario, vamos a estar validando si se intenta salir del mapa, chocar contra un muro o si cae en algun objeto
+  // Obtener coordenadas de la salida
+  // eX = getX(exitXY);
+  // eY = getY(exitXY);
   for (int i = 1; i <= movements; i++)
   {
-    // leemos el movimiento
     char movement;
+    cout << "Movimiento w a s d" << endl;
     cin >> movement;
     if (movement == 'w')
     {
@@ -381,32 +382,43 @@ int main(int argc, char const *argv[])
         printMessage(5);
       }
     }
-    // Validamos si encuentra un tesoro
     isTeasure();
-    // Validamos si llego a la salida
     bool winner = isWinner();
     if (winner)
     {
+      cout << "Posicion " << "(" << x << "," << y << ")" << " Vida: " << lifeCopy << " movimientos restantes: " << movements - i << endl;
       break;
     }
-    // Validamos si se cabaron los movimientos
     bool trapped = isTrapped(i);
     if (trapped)
     {
+      cout << "Posicion " << "(" << x << "," << y << ")" << " Vida: " << lifeCopy << " movimientos restantes: " << movements - i << endl;
       break;
     }
-    // validamos si cayo en una trampa
     isTrap();
-    // validamos si su vida llega a 0
     if (lifeCopy <= 0)
     {
+      cout << "Posicion " << "(" << x << "," << y << ")" << " Vida: " << lifeCopy << " movimientos restantes: " << movements - i << endl;
+
       code = 2;
       break;
     }
-    // validamos si cae en un portal
     isPortal();
+    cout << "Posicion " << "(" << x << "," << y << ")" << " Vida: " << lifeCopy << " movimientos restantes: " << movements - i << endl;
   }
-  // Terminamos el programa e imprimimos las salidas
+  // cout << "Nro de objetos " << cObjects << endl;
+  // cout << "Coordenadas de muros # " << wallXY << endl;
+  // cout << "Coordenadas de trampas X " << trapXY << endl;
+  // cout << "Coordenadas de tesoros T " << teasureXY << endl;
+  // cout << "Coordenadas de portal A P " << portalAXY << endl;
+  // cout << "Coordenadas de portal B P " << portalBXY << endl;
+  // cout << "Entrada E" << entranceXY << endl;
+  // cout << "Salida S" << exitXY << endl;
+  // cout << "Cantidad de objetos " << objects << endl;
+  // cout << "Vida inicial " << life << endl;
+  // cout << "Dimensiones " << dimensions << endl;
+  // cout << "Movimientos " << movements << endl;
+  // cout << "Posicion Final" << "(" << x << "," << y << ")" << " Vida: " << lifeCopy << endl;
   cout << "TESOROS: " << foundTeasures << endl;
   cout << "TRAMPAS: " << foundTraps << endl;
   cout << "VIDA: " << lifeCopy << endl;
