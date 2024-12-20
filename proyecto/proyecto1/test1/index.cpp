@@ -162,13 +162,11 @@ void printMessage(int value)
 }
 
 //*Validamos si el usuario consumio todos sus movimientos
-bool isTrapped(int i)
+void isTrapped(int i)
 {
-  bool b = 0;
   // Si consumio tidos sus movimientos, vamos terminar el programa, validamos si gano o quedo atrapado
   if (i == movements)
   {
-    b = 1;
     bool aux = isMatch(x, y, exitXY);
     if (aux)
     {
@@ -189,7 +187,6 @@ bool isTrapped(int i)
       code = 4;
     }
   }
-  return b;
 }
 
 //*Gana el juego
@@ -389,12 +386,6 @@ int main(int argc, char const *argv[])
     {
       break;
     }
-    // Validamos si se cabaron los movimientos
-    bool trapped = isTrapped(i);
-    if (trapped)
-    {
-      break;
-    }
     // validamos si cayo en una trampa
     isTrap();
     // validamos si su vida llega a 0
@@ -405,6 +396,8 @@ int main(int argc, char const *argv[])
     }
     // validamos si cae en un portal
     isPortal();
+    // Validamos si se acabaron los movimientos
+    isTrapped(i);
   }
   // Terminamos el programa e imprimimos las salidas
   cout << "TESOROS: " << foundTeasures << endl;

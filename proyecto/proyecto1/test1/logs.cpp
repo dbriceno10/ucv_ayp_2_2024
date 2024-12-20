@@ -2,9 +2,9 @@
 #include <cmath>
 using namespace std;
 
-int life = 0, lifeCopy = 0, dimensions = 0, objects = 0, entranceXY = 0, exitXY = 0, movements = 0, limitX = 0, limitY = 0, x = 0, y = 0, eX = 0, eY = 0, code = 0;
+int life = 0, lifeCopy = 0, objects = 0, entranceXY = 0, exitXY = 0, movements = 0, limitX = 0, limitY = 0, x = 0, y = 0, code = 0;
 const int minX = 0, minY = 0;
-int cTeasure = 0, cTrap = 0, foundTeasures = 0, foundTraps = 0, cPortal = 0;
+int cTeasure = 0, foundTeasures = 0, foundTraps = 0, cPortal = 0;
 long wallXY = 0, teasureXY = 0, trapXY, portalAXY = 0, portalBXY = 0, teasureObtainedXY = -1;
 const char entrance = 'E', out = 'S', wall = '#', teasure = 'T', trap = 'X', portal = 'P';
 
@@ -50,7 +50,6 @@ void getTrap(char value)
     cout << "Trampa X Y" << endl;
     int XY = readXY();
     trapXY = trapXY * 100 + XY;
-    cTrap++;
   }
 }
 
@@ -159,12 +158,10 @@ void printMessage(int value)
 }
 
 //*Validamos si el usuario consumio todos sus movimientos
-bool isTrapped(int i)
+void isTrapped(int i)
 {
-  bool b = 0;
   if (i == movements)
   {
-    b = 1;
     bool aux = isMatch(x, y, exitXY);
     if (aux)
     {
@@ -183,7 +180,6 @@ bool isTrapped(int i)
       code = 4;
     }
   }
-  return b;
 }
 
 //*Gana el juego
@@ -305,10 +301,8 @@ int main(int argc, char const *argv[])
   cout << "Dimensiones M N" << endl;
   cin >> limitX;
   limitX;
-  dimensions = limitX;
   cin >> limitY;
   limitY;
-  dimensions = dimensions * 10 + limitY;
   // Obtener el numero de objetos
   cout << "Nro de Objetos" << endl;
   cin >> objects;
@@ -389,12 +383,6 @@ int main(int argc, char const *argv[])
       cout << "Posicion " << "(" << x << "," << y << ")" << " Vida: " << lifeCopy << " movimientos restantes: " << movements - i << endl;
       break;
     }
-    bool trapped = isTrapped(i);
-    if (trapped)
-    {
-      cout << "Posicion " << "(" << x << "," << y << ")" << " Vida: " << lifeCopy << " movimientos restantes: " << movements - i << endl;
-      break;
-    }
     isTrap();
     if (lifeCopy <= 0)
     {
@@ -404,21 +392,20 @@ int main(int argc, char const *argv[])
       break;
     }
     isPortal();
+    isTrapped(i);
     cout << "Posicion " << "(" << x << "," << y << ")" << " Vida: " << lifeCopy << " movimientos restantes: " << movements - i << endl;
   }
-  // cout << "Nro de objetos " << cObjects << endl;
-  // cout << "Coordenadas de muros # " << wallXY << endl;
-  // cout << "Coordenadas de trampas X " << trapXY << endl;
-  // cout << "Coordenadas de tesoros T " << teasureXY << endl;
-  // cout << "Coordenadas de portal A P " << portalAXY << endl;
-  // cout << "Coordenadas de portal B P " << portalBXY << endl;
-  // cout << "Entrada E" << entranceXY << endl;
-  // cout << "Salida S" << exitXY << endl;
-  // cout << "Cantidad de objetos " << objects << endl;
-  // cout << "Vida inicial " << life << endl;
-  // cout << "Dimensiones " << dimensions << endl;
-  // cout << "Movimientos " << movements << endl;
-  // cout << "Posicion Final" << "(" << x << "," << y << ")" << " Vida: " << lifeCopy << endl;
+  cout << "Coordenadas de muros # " << wallXY << endl;
+  cout << "Coordenadas de trampas X " << trapXY << endl;
+  cout << "Coordenadas de tesoros T " << teasureXY << endl;
+  cout << "Coordenadas de portal A P " << portalAXY << endl;
+  cout << "Coordenadas de portal B P " << portalBXY << endl;
+  cout << "Entrada E" << entranceXY << endl;
+  cout << "Salida S" << exitXY << endl;
+  cout << "Cantidad de objetos " << objects << endl;
+  cout << "Vida inicial " << life << endl;
+  cout << "Movimientos " << movements << endl;
+  cout << "Posicion Final" << "(" << x << "," << y << ")" << " Vida: " << lifeCopy << endl;
   cout << "TESOROS: " << foundTeasures << endl;
   cout << "TRAMPAS: " << foundTraps << endl;
   cout << "VIDA: " << lifeCopy << endl;
