@@ -2,10 +2,18 @@
 #include <cmath>
 using namespace std;
 
-int life = 0, lifeCopy = 0, objects = 0, entranceXY = 0, exitXY = 0, movements = 0, limitX = 0, limitY = 0, x = 0, y = 0, code = 0;
+//*Zona de declaracion de variables, con alcance global
+// Variables de lectura
+int life = 0, lifeCopy = 0, objects = 0, entranceXY = 0, exitXY = 0, movements = 0, limitX = 0, limitY = 0;
+// Limites inferiores del mapa
 const int minX = 0, minY = 0;
+// Contadores
 int cTeasure = 0, foundTeasures = 0, foundTraps = 0, cPortal = 0;
+// Variables para guardar coordenadas
 long wallXY = 0, teasureXY = 0, trapXY, portalAXY = 0, portalBXY = 0, teasureObtainedXY = -1;
+// posision x y del jugador y codigo de resultado del juego para imprimir mensaje
+int x = 0, y = 0, code = 0;
+// Objetos
 const char entrance = 'E', out = 'S', wall = '#', teasure = 'T', trap = 'X', portal = 'P';
 
 //*Leer coordenadas para los objetos
