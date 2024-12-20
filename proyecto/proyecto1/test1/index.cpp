@@ -383,7 +383,7 @@ int main(int argc, char const *argv[])
     // Validamos si encuentra un tesoro
     isTeasure();
     // Validamos si llego a la salida
-    bool winner = isWinner();
+    const bool winner = isWinner();
     if (winner)
     {
       break;
