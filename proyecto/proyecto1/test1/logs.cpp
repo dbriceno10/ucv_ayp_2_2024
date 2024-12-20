@@ -290,7 +290,7 @@ void isPortal()
   }
 }
 
-int main(int argc, char const *argv[])
+int main()
 {
   // Obtener vida inicial
   cout << "Vida" << endl;
