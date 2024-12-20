@@ -377,7 +377,7 @@ int main(int argc, char const *argv[])
       }
     }
     isTeasure();
-    bool winner = isWinner();
+    const bool winner = isWinner();
     if (winner)
     {
       cout << "Posicion " << "(" << x << "," << y << ")" << " Vida: " << lifeCopy << " movimientos restantes: " << movements - i << endl;
