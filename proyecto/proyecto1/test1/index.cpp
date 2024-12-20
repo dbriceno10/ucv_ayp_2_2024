@@ -307,9 +307,7 @@ int main(int argc, char const *argv[])
   lifeCopy = life;
   // Limites del mapa
   cin >> limitX;
-  limitX;
   cin >> limitY;
-  limitY;
   // Obtener el numero de objetos
   cin >> objects;
   // Obtener los objetos y guadar sus posiciones

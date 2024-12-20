@@ -299,9 +299,7 @@ int main(int argc, char const *argv[])
   // Obtener las dimensiones
   cout << "Dimensiones M N" << endl;
   cin >> limitX;
-  limitX;
   cin >> limitY;
-  limitY;
   // Obtener el numero de objetos
   cout << "Nro de Objetos" << endl;
   cin >> objects;
