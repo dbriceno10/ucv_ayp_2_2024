@@ -1,5 +1,4 @@
 #include <iostream>
-#include <cmath>
 using namespace std;
 
 //*Zona de declaracion de variables, con alcance global
