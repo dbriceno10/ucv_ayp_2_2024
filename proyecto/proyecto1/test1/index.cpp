@@ -24,7 +24,6 @@ void getWall(char value)
 {
   if (value == wall)
   {
-    cout << "Muro X Y" << endl;
     int XY = readXY();
     wallXY = wallXY * 100 + XY;
   }
@@ -35,7 +34,6 @@ void getTeasure(char value)
 {
   if (value == teasure)
   {
-    cout << "Tesoro X Y" << endl;
     int XY = readXY();
     teasureXY = teasureXY * 100 + XY;
     cTeasure++;
@@ -47,7 +45,6 @@ void getTrap(char value)
 {
   if (value == trap)
   {
-    cout << "Trampa X Y" << endl;
     int XY = readXY();
     trapXY = trapXY * 100 + XY;
   }
@@ -58,7 +55,6 @@ void getPortal(char value)
 {
   if (value == portal)
   {
-    cout << "Portal XA YA XB YB" << endl;
     int XYA = readXY();
     int XYB = readXY();
     portalAXY = portalAXY * 100 + XYA;
@@ -72,7 +68,6 @@ void getEntrance(char value)
 {
   if (value == entrance)
   {
-    cout << "Entrada X Y" << endl;
     entranceXY = readXY();
   }
 }
@@ -82,7 +77,6 @@ void getExit(char value)
 {
   if (value == out)
   {
-    cout << "Salida X Y" << endl;
     exitXY = readXY();
   }
 }
