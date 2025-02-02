@@ -16,6 +16,22 @@ void printMatriz(int **M, int n, int m)
   cout << endl;
 }
 
+void printArray(int array[], int length)
+{
+  cout << "[";
+  for (int i = 0; i < length; i++)
+  {
+    if (i == length - 1)
+    {
+      cout << array[i] << "]" << endl;
+    }
+    else
+    {
+      cout << array[i] << ", ";
+    }
+  }
+}
+
 int main(int argc, char const *argv[])
 {
   const int length = 3;
@@ -38,5 +54,6 @@ int main(int argc, char const *argv[])
   matriz[2][1] = 8;
   matriz[2][2] = 9;
   printMatriz(matriz, length, columns);
+  printArray(array, length);
   return 0;
 }
