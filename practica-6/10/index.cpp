@@ -33,6 +33,5 @@ int main(int argc, char const *argv[])
   printMatriz(M, d);
   cout << "Matriz MT" << endl;
   printMatriz(MT, d);
-  cout << MT << endl;
   return 0;
 }
