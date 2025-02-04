@@ -43,6 +43,7 @@ int siguientePrimo(int x)
   {
     x = x + 1;
   } while (!esPrimo(x));
+  return x;
 }
 
 int obtenerMaximoExponente(int x, int primo)
@@ -53,18 +54,54 @@ int obtenerMaximoExponente(int x, int primo)
     acumulado = acumulado * primo;
     x = x / primo;
   }
+  return acumulado;
 }
 
-int intercambiar(int &a, int &b)
+void intercambiar(int &a, int &b)
 {
   int temp = a;
   a = b;
   b = temp;
 }
 
+int solicitarNumero()
+{
+  int a = 0;
+  cout << "ingrese numero" << endl;
+  cin >> a;
+  return a;
+}
+
+int maximo(int a, int b)
+{
+  if (a > b)
+  {
+    return a;
+  }
+  else
+  {
+    return b;
+  }
+}
+
 int main(int argc, char const *argv[])
 {
   /* code */
-  int a = 0;
+  int a = solicitarNumero(), b = solicitarNumero();
+  if (b > a)
+  {
+    intercambiar(a, b);
+  }
+  int mcm = 1, primo = 2;
+  while (primo <= a)
+  {
+    int exponenteA = obtenerMaximoExponente(a, primo);
+    int exponenteB = obtenerMaximoExponente(b, primo);
+    mcm = mcm * maximo(exponenteA, exponenteB);
+    primo = siguientePrimo(primo);
+  }
+
+  cout << "MCM entre " << a << " y " << b << " es " << mcm << endl;
+
   return 0;
 }
