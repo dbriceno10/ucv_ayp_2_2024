@@ -34,27 +34,34 @@ void printArray(int array[], int length)
 
 void productMatriz(int **MA, int na, int ma, int **MB, int nb, int mb, int **MC)
 {
-  for (int i = 0; i < na; i++)
+  if (ma != nb)
   {
-    for (int j = 0; j < mb; j++)
+    cout << "no se pueden operar matrices con dimensiones incopatibles";
+  }
+  else
+  {
+    for (int i = 0; i < na; i++)
     {
-      MC[i][j] = 0;
-      for (int k = 0; k < ma; k++)
+      for (int j = 0; j < mb; j++)
       {
-        cout << "i: " << i << " j: " << j << " k: " << k << endl;
-        const int elA = MA[i][k];
-        const int elB = MB[k][j];
-        const int elC = elA * elB;
-        const int totalC = MC[i][j];
-        MC[i][j] += MA[i][k] * MB[k][j];
-        cout << "(" << i << "," << j << ")" << ": " << elA << "*" << elB << "=" << elC << endl;
-        if (totalC > 0)
+        MC[i][j] = 0;
+        for (int k = 0; k < ma; k++)
         {
-          cout << "Total(" << i << "," << j << "): " << totalC << "+" << elC << "=" << MC[i][j] << endl;
-        }
-        else
-        {
-          cout << "Total(" << i << "," << j << "): " << MC[i][j] << endl;
+          cout << "i: " << i << " j: " << j << " k: " << k << endl;
+          const int elA = MA[i][k];
+          const int elB = MB[k][j];
+          const int elC = elA * elB;
+          const int totalC = MC[i][j];
+          MC[i][j] += MA[i][k] * MB[k][j];
+          cout << "(" << i << "," << j << ")" << ": " << elA << "*" << elB << "=" << elC << endl;
+          if (totalC > 0)
+          {
+            cout << "Total(" << i << "," << j << "): " << totalC << "+" << elC << "=" << MC[i][j] << endl;
+          }
+          else
+          {
+            cout << "Total(" << i << "," << j << "): " << MC[i][j] << endl;
+          }
         }
       }
     }
@@ -66,9 +73,9 @@ int main(int argc, char const *argv[])
   const int na = 3, ma = 2, nb = 2, mb = 5;
   const int nc = na, mc = mb;
   int **MA = new int *[ma];
-  MA[0] = new int[na];
-  MA[1] = new int[na];
-  MA[2] = new int[na];
+  // MA[0] = new int[na];
+  // MA[1] = new int[na];
+  // MA[2] = new int[na];
   // MA[0][0] = 1;
   // MA[0][1] = 2;
   // MA[1][0] = 3;
@@ -78,6 +85,7 @@ int main(int argc, char const *argv[])
 
   for (int i = 0; i < na; i++)
   {
+    MA[i] = new int[na];
     for (int j = 0; j < ma; j++)
     {
       MA[i][j] = random() % 10;
@@ -85,8 +93,8 @@ int main(int argc, char const *argv[])
   }
 
   int **MB = new int *[mb];
-  MB[0] = new int[nb];
-  MB[1] = new int[nb];
+  // MB[0] = new int[nb];
+  // MB[1] = new int[nb];
   // MB[0][0] = 7;
   // MB[0][1] = 8;
   // MB[0][2] = 9;
@@ -96,6 +104,7 @@ int main(int argc, char const *argv[])
 
   for (int i = 0; i < nb; i++)
   {
+    MB[i] = new int[nb];
     for (int j = 0; j < mb; j++)
     {
       MB[i][j] = random() % 10;
