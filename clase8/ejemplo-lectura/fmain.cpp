@@ -25,12 +25,12 @@ using namespace std;
 
 struct Datos
 {
- string palabra;
- int entero;
- float flotante; 
+  string palabra;
+  int entero;
+  float flotante;
 };
 
-Datos datos[3]={{"aaa",1,10.1},{"bbb",2,20.2},{"ccc",3,30.3}};	
+Datos datos[3] = {{"aaa", 1, 10.1}, {"bbb", 2, 20.2}, {"ccc", 3, 30.3}};
 
 void lectura1(string nombreArchivo)
 {
@@ -40,15 +40,15 @@ void lectura1(string nombreArchivo)
   {
     while (!feof(archivo))
     {
-      //leer cada elemento de la linea en una variable
+      // leer cada elemento de la linea en una variable
       char palabra[256];
       int entero;
       float flotante;
 
-      //3 elementos por linea
+      // 3 elementos por linea
       if (fscanf(archivo, "%s %d %f", palabra, &entero, &flotante) == 3)
       {
-	   printf("%s %d %.1f\n", palabra, entero, flotante);
+        printf("%s %d %.1f\n", palabra, entero, flotante);
       }
     }
 
@@ -68,13 +68,13 @@ void lectura2(string nombreArchivo)
   {
     while (true)
     {
-      //leer cada elemento de la linea en una variable
+      // leer cada elemento de la linea en una variable
       string palabra;
       int entero;
       float flotante;
 
-      //3 elementos por linea
-      //verificar si el 1er elemento leido es fin de archivo
+      // 3 elementos por linea
+      // verificar si el 1er elemento leido es fin de archivo
       archivo >> palabra;
       if (archivo.eof())
       {
@@ -106,19 +106,19 @@ void lectura3(string nombreArchivo)
       int entero;
       float flotante;
 
-      //leer linea completa
+      // leer linea completa
       getline(archivo, line);
 
-      //separar cada elemento de la linea en strings individuales (tokens)
+      // separar cada elemento de la linea en strings individuales (tokens)
       string token = "";
       int elem = 0;
       for (int i = 0; i < line.size(); i++)
       {
-        //concatenar caracteres
+        // concatenar caracteres
         token = token + line[i];
 
-        //chequear fin de palabra
-        if (i == line.size() - 1 || line[i+1] == ' ')
+        // chequear fin de palabra
+        if (i == line.size() - 1 || line[i + 1] == ' ')
         {
           if (elem == 0)
           {
@@ -129,7 +129,7 @@ void lectura3(string nombreArchivo)
           }
           else if (elem == 1)
           {
-            //convertir a entero
+            // convertir a entero
             entero = atoi(token.c_str());
             elem++;
 
@@ -137,7 +137,7 @@ void lectura3(string nombreArchivo)
           }
           else
           {
-            //convertir a flotante
+            // convertir a flotante
             flotante = atof(token.c_str());
             elem = 0;
 
@@ -161,12 +161,12 @@ void escritura1(string nombreArchivo)
   FILE *archivo = fopen(nombreArchivo.c_str(), "w");
   if (archivo != NULL)
   {
-   for(int i=0; i<3; i++)
-   {
-    fprintf(archivo,"%s %d %.1f\n", datos[i].palabra.c_str(), datos[i].entero, datos[i].flotante);
-   }
+    for (int i = 0; i < 3; i++)
+    {
+      fprintf(archivo, "%s %d %.1f\n", datos[i].palabra.c_str(), datos[i].entero, datos[i].flotante);
+    }
 
-   fclose(archivo);
+    fclose(archivo);
   }
   else
   {
@@ -179,10 +179,10 @@ void escritura2(string nombreArchivo)
   ofstream archivo(nombreArchivo.c_str());
   if (archivo.is_open())
   {
-   for(int i=0; i<3; i++)
-   {
-    archivo << datos[i].palabra << " " << datos[i].entero << " " << datos[i].flotante << endl;
-   }
+    for (int i = 0; i < 3; i++)
+    {
+      archivo << datos[i].palabra << " " << datos[i].entero << " " << datos[i].flotante << endl;
+    }
   }
   else
   {
@@ -190,8 +190,8 @@ void escritura2(string nombreArchivo)
   }
 }
 
-
-int main() {
+int main()
+{
   cout << "Lectura1:" << endl;
   lectura1("fdata.txt");
   cout << "---" << endl;
@@ -206,6 +206,6 @@ int main() {
   cout << "---" << endl;
   cout << "Escritura2: ver archivo 'fdata_out2.txt'" << endl;
   escritura2("fdata_out2.txt");
-  
+
   return 0;
 }
