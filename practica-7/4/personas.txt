@@ -1,0 +1,81 @@
+20
+Daniel Briceno
+20123456
+18
+M
+Maria Lopez
+30123457
+8
+F
+Juan Perez
+40123458
+30
+M
+Ana Gomez
+50123459
+22
+F
+Carlos Ruiz
+60123460
+15
+M
+Laura Sanchez
+70123461
+27
+F
+Luis Fernandez
+80123462
+35
+M
+Marta Diaz
+90123463
+19
+F
+Jose Martinez
+100123464
+12
+M
+Elena Torres
+110123465
+33
+F
+Pedro Ramirez
+120123466
+45
+M
+Lucia Morales
+130123467
+21
+F
+Miguel Herrera
+140123468
+29
+M
+Carmen Rojas
+150123469
+26
+F
+Jorge Castro
+160123470
+32
+M
+Patricia Vega
+170123471
+10
+F
+Rafael Ortiz
+180123472
+37
+M
+Isabel Mendoza
+190123473
+31
+F
+Victor Soto
+200123474
+8
+M
+Pedro Sotomayor
+15985698
+45
+M
