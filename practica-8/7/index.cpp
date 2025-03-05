@@ -42,6 +42,7 @@ public:
   string aString()
   {
     // string n = stoi(Numerador);
+    Simplificar();
     string n = to_string(Numerador);
     string d = to_string(Denominador);
 
@@ -55,20 +56,34 @@ public:
     Denominador = Denominador / mcd;
   }
 
+  bool Comparar(Fraccion F)
+  {
+    F.Simplificar();
+    Simplificar();
+    return Numerador == F.getNumerador() && Denominador == F.getDenominador();
+  }
+
 private:
   int MCD(int a, int b)
   {
-
-    return 0;
+    while (b != 0)
+    {
+      int temp = b;
+      b = a % b;
+      a = temp;
+    }
+    return a;
   }
 };
 
 int main(int argc, char const *argv[])
 {
-  Fraccion F1(1, 2), F2(1, 2);
+  Fraccion F1(1, 2), F2(1, 4);
 
   Fraccion Fres = F1.Sumar(F2);
   Fres.Simplificar();
+
+  cout << F1.Comparar(F2) << endl;
 
   cout << Fres.aString();
 
