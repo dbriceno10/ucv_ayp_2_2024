@@ -8,7 +8,6 @@ class Fraccion
   int Numerador, Denominador;
 
 public:
-  // Fraccion() {}
   Fraccion(int N1, int N2)
   {
     Numerador = N1;
@@ -25,17 +24,13 @@ public:
     return Denominador;
   }
 
-  // F1.Numerador*F2.Denominador+F2.Numerador*F1.Denominador
-  //-------------------------------------------------------
-  //          F1.Denominador*F2.Denominador
-
   Fraccion Sumar(Fraccion F)
   {
 
     int N = Numerador * F.getDenominador() + F.getNumerador() * Denominador;
     int D = Denominador * F.getDenominador();
     Fraccion Fnueva(N, D);
-
+    Fnueva.Simplificar();
     return Fnueva;
   }
 
@@ -64,6 +59,7 @@ public:
   }
 
 private:
+  // Calculando el MCD usando el algoritmo de euclides
   int MCD(int a, int b)
   {
     while (b != 0)
@@ -76,16 +72,43 @@ private:
   }
 };
 
-int main(int argc, char const *argv[])
+int SolicitarNumero(string message)
 {
-  Fraccion F1(1, 2), F2(1, 4);
+  int n;
+  cout << message;
+  cin >> n;
+  return n;
+}
 
-  Fraccion Fres = F1.Sumar(F2);
-  Fres.Simplificar();
+void menu(Fraccion F1, Fraccion F2)
+{
+  int option = 0;
+  do
+  {
+    cout << "1. Sumar fracciones" << endl;
+    cout << "2. Restar fracciones" << endl;
+    cout << "3. Multiplicar fracciones" << endl;
+    cout << "4. Dividir fracciones" << endl;
+    cout << "5. Comparar fracciones" << endl;
+    cout << "6. Salir" << endl;
+    option = SolicitarNumero("Ingrese una opcion: ");
+    if (option == 1)
+    {
+      Fraccion F3 = F1.Sumar(F2);
+      cout << "La suma de las fracciones es: " << F3.aString() << endl;
+    }
+  } while (option != 6);
+}
 
-  cout << F1.Comparar(F2) << endl;
+int main()
+{
+  int N1, N2, D1, D2;
+  N1 = SolicitarNumero("Ingrese el numerador de la fraccion 1: ");
+  D1 = SolicitarNumero("Ingrese el denominador de la fraccion 1: ");
+  N2 = SolicitarNumero("Ingrese el numerador de la fraccion 2: ");
+  D2 = SolicitarNumero("Ingrese el denominador de la fraccion 2: ");
 
-  cout << Fres.aString();
+  Fraccion F1(N1, D1), F2(N2, D2);
 
   return 0;
 }
