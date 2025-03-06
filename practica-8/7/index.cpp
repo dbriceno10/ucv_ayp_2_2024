@@ -26,7 +26,6 @@ public:
 
   Fraccion Sumar(Fraccion F)
   {
-
     int N = Numerador * F.getDenominador() + F.getNumerador() * Denominador;
     int D = Denominador * F.getDenominador();
     Fraccion Fnueva(N, D);
@@ -40,8 +39,14 @@ public:
     Simplificar();
     string n = to_string(Numerador);
     string d = to_string(Denominador);
-
-    return n + "/" + d;
+    if (Denominador == 1)
+    {
+      return n;
+    }
+    else
+    {
+      return n + "/" + d;
+    }
   }
 
   void Simplificar()
@@ -56,6 +61,24 @@ public:
     F.Simplificar();
     Simplificar();
     return Numerador == F.getNumerador() && Denominador == F.getDenominador();
+  }
+
+  Fraccion Dividir(Fraccion F)
+  {
+    int N = Numerador * F.getDenominador();
+    int D = Denominador * F.getNumerador();
+    Fraccion Fnueva(N, D);
+    Fnueva.Simplificar();
+    return Fnueva;
+  }
+
+  Fraccion Multiplicar(Fraccion F)
+  {
+    int N = Numerador * F.getNumerador();
+    int D = Denominador * F.getDenominador();
+    Fraccion Fnueva(N, D);
+    Fnueva.Simplificar();
+    return Fnueva;
   }
 
 private:
@@ -74,41 +97,42 @@ private:
 
 int SolicitarNumero(string message)
 {
-  int n;
+  int n = 0;
   cout << message;
-  cin >> n;
-  return n;
-}
-
-void menu(Fraccion F1, Fraccion F2)
-{
-  int option = 0;
   do
   {
-    cout << "1. Sumar fracciones" << endl;
-    cout << "2. Restar fracciones" << endl;
-    cout << "3. Multiplicar fracciones" << endl;
-    cout << "4. Dividir fracciones" << endl;
-    cout << "5. Comparar fracciones" << endl;
-    cout << "6. Salir" << endl;
-    option = SolicitarNumero("Ingrese una opcion: ");
-    if (option == 1)
+    cin >> n;
+    if (n < 1)
     {
-      Fraccion F3 = F1.Sumar(F2);
-      cout << "La suma de las fracciones es: " << F3.aString() << endl;
+      cout << "El numero debe ser mayor a 0" << endl;
     }
-  } while (option != 6);
+  } while (n < 1);
+  return n;
 }
 
 int main()
 {
-  int N1, N2, D1, D2;
+  int N1, N2, N3, D1, D2, D3;
   N1 = SolicitarNumero("Ingrese el numerador de la fraccion 1: ");
   D1 = SolicitarNumero("Ingrese el denominador de la fraccion 1: ");
   N2 = SolicitarNumero("Ingrese el numerador de la fraccion 2: ");
   D2 = SolicitarNumero("Ingrese el denominador de la fraccion 2: ");
+  D3 = SolicitarNumero("Ingrese el denominador de la fraccion 3: ");
+  N3 = SolicitarNumero("Ingrese el numerador de la fraccion 3: ");
 
-  Fraccion F1(N1, D1), F2(N2, D2);
+  Fraccion F1(N1, D1), F2(N2, D2), F3(N3, D3);
+
+  Fraccion Suma = F1.Sumar(F2.Sumar(F3));
+
+  cout << "La suma de las 3 fracciones es: " << Suma.aString() << endl;
+
+  Fraccion Multiplicacion = F1.Multiplicar(F3);
+
+  cout << "La multiplicacion de la fraccion 1 y 3 es: " << Multiplicacion.aString() << endl;
+
+  Fraccion Division = F2.Dividir(F1);
+
+  cout << "La division de la fraccion 2 y 1 es: " << Division.aString() << endl;
 
   return 0;
 }
