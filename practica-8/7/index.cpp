@@ -134,5 +134,32 @@ int main()
 
   cout << "La division de la fraccion 2 y 1 es: " << Division.aString() << endl;
 
+  if (F1.Comparar(F2))
+  {
+    cout << "Las fracciones 1 y 2 son iguales" << endl;
+  }
+  else
+  {
+    cout << "Las fracciones 1 y 2 no son iguales" << endl;
+  }
+
+  if (F1.Comparar(F3))
+  {
+    cout << "Las fracciones 1 y 3 son iguales" << endl;
+  }
+  else
+  {
+    cout << "Las fracciones 1 y 3 no son iguales" << endl;
+  }
+
+  if (F2.Comparar(F3))
+  {
+    cout << "Las fracciones 2 y 3 son iguales" << endl;
+  }
+  else
+  {
+    cout << "Las fracciones 2 y 3 no son iguales" << endl;
+  }
+
   return 0;
 }
