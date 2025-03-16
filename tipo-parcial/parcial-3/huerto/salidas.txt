@@ -1,0 +1,5 @@
+Numero de hortalizas de cada tipo:
+Tomate: 3
+Lechuga: 3
+Zanahoria: 3
+Numero de hortalizas que podran ser comercializadas: 6

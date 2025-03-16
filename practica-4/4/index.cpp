@@ -1,41 +1,60 @@
 #include <iostream>
-#include <cmath>
 using namespace std;
-int leerBinario()
+
+int readInt()
 {
-  int n = 0, contador = 0, binario = 0;
-  cout << "Introduzca una secuencia de numeros entre 0 y 1, -1 para terminar la secuencia" << endl;
-  while (n == 0 || n == 1)
-  {
-    cin >> n;
-    if (n == 0 || n == 1)
-    {
-      binario = binario * 10 + n;
-      contador++;
-    }
-  }
-  return binario;
+  int n = 0;
+  cin >> n;
+  return n;
 }
 
-int obtenerDecimal(int numeros)
+bool isEven(int n)
 {
-  int copia = numeros, decimal = 0, bit = 0, contador = 0;
-  while (copia > 0)
+  if (n % 2 == 0)
   {
-    bit = copia % 10;
-    copia = copia / 10;
-    decimal = decimal + pow(2, contador) * bit;
-    contador++;
+    return true;
   }
+  else
+  {
+    return false;
+  }
+}
 
-  return decimal;
+float percentage(int n, int total)
+{
+  if (total > 0)
+  {
+    float a = n, b = total;
+    return (a / b) * 100;
+  }
+  else
+  {
+    return 0;
+  }
 }
 
 int main(int argc, char const *argv[])
 {
-  /* code */
-  int binario = leerBinario();
-  int decimal = obtenerDecimal(binario);
-  cout << "El numero binario " << binario << " en decimal es " << decimal << endl;
+  bool b = true;
+  int cNumbers = 0, acumNumbers = 0, cEven = 0, acumEvent = 0;
+  while (b)
+  {
+    int n = readInt();
+    if (n <= 0)
+    {
+      b = false;
+      break;
+    }
+    if (isEven(n))
+    {
+      cEven++;
+      acumEvent += n;
+    }
+    cNumbers++;
+    acumNumbers += n;
+  }
+  cout << "Se introdujeron " << cNumbers << " numeros y su suma fue " << acumNumbers << endl;
+  cout << "Se introdujeron " << cEven << " numeros pares y su suma fue " << acumEvent << " y su porcentaje fue de " << percentage(cEven, cNumbers) << "%" << endl;
+
   return 0;
 }
