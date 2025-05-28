@@ -93,6 +93,11 @@ private:
     }
     return a;
   }
+
+  int MCM(int a, int b)
+  {
+    return abs(a * b) / MCD(a, b);
+  }
 };
 
 int SolicitarNumero(string message)

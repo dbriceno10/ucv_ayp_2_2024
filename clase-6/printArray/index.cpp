@@ -8,8 +8,8 @@ void printMatriz(int **M, int n, int m)
     cout << "|";
     for (int j = 0; j < m; j++)
     {
-      // cout << "(" << i << "," << j << "): " << " " << M[i][j] << " ";
-      cout << " " << M[i][j] << " ";
+      cout << "(" << i << "," << j << "): " << " " << M[i][j] << " ";
+      // cout << " " << M[i][j] << " ";
     }
     cout << "|" << endl;
   }
