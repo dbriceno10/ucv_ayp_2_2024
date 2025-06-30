@@ -33,6 +33,15 @@ public:
     return Fnueva;
   }
 
+  Fraccion operator+(const Fraccion &F) const
+  {
+    int N = Numerador * F.Denominador + F.Numerador * Denominador;
+    int D = Denominador * F.Denominador;
+    Fraccion Fnueva(N, D);
+    Fnueva.Simplificar();
+    return Fnueva;
+  }
+
   string aString()
   {
     // string n = stoi(Numerador);
@@ -165,6 +174,10 @@ int main()
   {
     cout << "Las fracciones 2 y 3 no son iguales" << endl;
   }
+
+  Fraccion Suma2 = F1 + F2 + F3;
+
+  cout << "La suma de las 3 fracciones es: " << Suma2.aString() << endl;
 
   return 0;
 }
